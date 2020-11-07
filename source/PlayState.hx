@@ -20,7 +20,7 @@ class PlayState extends FlxState
 		tiles.setTileProperties(2, FlxObject.ANY);
 		add(tiles);
 
-		player = new Player();
+		player = new Player(tiles);
 		map.loadEntities(placeEntities, "entities");
 		add(player);
 
