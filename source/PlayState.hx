@@ -1,42 +1,55 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
-import flixel.tile.FlxTilemap;
+import flixel.group.FlxGroup;
 
 class PlayState extends FlxState
 {
+	public static final CELL_SIZE:Int = 32;
+	public static final CELL_SCALE:Float = CELL_SIZE / 32;
+
 	var player:Player;
 	var map:FlxOgmo3Loader;
-	var tiles:FlxTilemap;
+
+	public var blocks:FlxTypedGroup<Block>;
 
 	override public function create()
 	{
+		blocks = new FlxTypedGroup<Block>();
 		map = new FlxOgmo3Loader(AssetPaths.AdventCollab20_Digging__ogmo, AssetPaths.level_test__json);
-		tiles = map.loadTilemap(AssetPaths.tiles__png, "tiles");
-		tiles.follow();
-		tiles.setTileProperties(1, FlxObject.ANY);
-		tiles.setTileProperties(2, FlxObject.ANY);
-		add(tiles);
 
-		player = new Player(tiles);
 		map.loadEntities(placeEntities, "entities");
-		add(player);
-
+		map.loadEntities(placeEntities, "blocks");
+		add(blocks);
 		super.create();
 	}
 
 	override public function update(elapsed:Float)
 	{
+		if (FlxG.keys.anyPressed([R]))
+			FlxG.switchState(new PlayState());
+
 		super.update(elapsed);
 	}
 
 	function placeEntities(entity:EntityData)
 	{
-		if (entity.name == "player")
+		var en_x = entity.x * CELL_SCALE;
+		var en_y = entity.y * CELL_SCALE;
+		switch (entity.name)
 		{
-			player.setPosition(entity.x, entity.y);
+			case "player":
+				player = new Player(en_x, en_y, this);
+				add(player);
+			case "snow":
+				var block = new BlockSnow(en_x, en_y);
+				blocks.add(block);
+			case "snow_gold":
+				var block = new BlockSnowGold(en_x, en_y);
+				blocks.add(block);
 		}
 	}
 }

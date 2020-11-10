@@ -15,24 +15,23 @@
   "compactExport": false,
   "externalScript": "",
   "playCommand": "",
-  "entityTags": [],
+  "entityTags": ["entities", "blocks"],
   "layers": [
     {
       "definition": "entity",
       "name": "entities",
       "gridSize": {"x": 32, "y": 32},
       "exportID": "42740052",
-      "requiredTags": [],
+      "requiredTags": ["entities"],
       "excludedTags": []
     },
     {
-      "definition": "tile",
-      "name": "tiles",
+      "definition": "entity",
+      "name": "blocks",
       "gridSize": {"x": 32, "y": 32},
-      "exportID": "42742408",
-      "exportMode": 0,
-      "arrayMode": 0,
-      "defaultTileset": "tiles"
+      "exportID": "95514992",
+      "requiredTags": ["blocks"],
+      "excludedTags": []
     }
   ],
   "entities": [
@@ -69,11 +68,85 @@
       "nodeLimit": 0,
       "nodeDisplay": 0,
       "nodeGhost": true,
-      "tags": [],
+      "tags": ["entities"],
       "values": []
+    },
+    {
+      "exportID": "95515997",
+      "name": "snow",
+      "limit": -1,
+      "size": {"x": 32, "y": 32},
+      "origin": {"x": 0, "y": 0},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#ffffffff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 32, "y": 32},
+      "resizeableX": false,
+      "resizeableY": false,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": ["blocks"],
+      "values": [],
+      "texture": "../images/block_snow.png",
+      "textureImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAC9JREFUWIXtzjEBAAAIw7CBf89DBk9qoJm2zWP7OQcAAAAAAAAAAAAAAAAAAEiSA02IBDyuzCSCAAAAAElFTkSuQmCC"
+    },
+    {
+      "exportID": "95543967",
+      "name": "snow_gold",
+      "limit": -1,
+      "size": {"x": 32, "y": 2},
+      "origin": {"x": 0, "y": 0},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#ffab34ff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 32, "y": 32},
+      "resizeableX": false,
+      "resizeableY": false,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": ["blocks"],
+      "values": [],
+      "texture": "../images/block_snow_gold.png",
+      "textureImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAMFJREFUWIXtVkkOgCAMBOOfPPojH+OPPPoqPJEgKaVTUMQwNyN2ptNFrHPOmYaYWpIPAZ8QMJd8fO7r7XnZDjiG1UxBTBwDEdK8BLCAXPbSM2oBtTEEwAIkHd7VFKj2gMcri8iTaIJLwJYgzBCZbQRJB1KEOSfQslRtQkp0zrmkAEo5lw1HxL1jHQgJn2rC7H3gKWKPvhZRWEvKGc3kiB2Ig1NkaOMaU3gnpID2TPMeEAuIM6s1HUV/wxropwS/FXABKANU8Mnm12AAAAAASUVORK5CYII="
     }
   ],
-  "tilesets": [
-    {"label": "tiles", "path": "../images/tiles.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAAgCAYAAADtwH1UAAAAAXNSR0IArs4c6QAAAO1JREFUaIHt2U0OwiAQhmFqvFOX3sjD9EYueypckSDhb5D6hfg+O2NjyHwMTOPmxLz3Xr0GpZt6Af+OAMQIQIwAxO7qBazsPB4fn/fny/wb26zFjFpxCkoLn7IEwREkRgBGrd3f+0xAAGIEIEYAYgRg1DPhMAUthPeAL/Ai9gOhyCPF7cERVBHvcMtsb0EHFJQK3uoE67FEB0yUC63VOQRQkNu5td1cK3TtOwKoiAt+1SXM/wENVxU+oAPEmIIM4rM81xkjkxMd0Cktbq7Y1ovbOe6A6ax3Bh0gRgCd0p09azriEhajA8QIQIwAxN6QUFTw3QeMuwAAAABJRU5ErkJggg==", "tileWidth": 32, "tileHeight": 32, "tileSeparationX": 0, "tileSeparationY": 0}
-  ]
+  "tilesets": []
 }

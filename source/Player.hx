@@ -3,7 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 
 enum Direction
@@ -16,18 +15,18 @@ enum Direction
 
 class Player extends FlxSprite
 {
-	static final MOVE_SPEED:Float = 32 * 4;
-	static final JUMP_SPEED:Float = 32 * 10;
-	static final GRAVITY:Float = 32 * 30;
+	static final MOVE_SPEED:Float = PlayState.CELL_SIZE * 4;
+	static final JUMP_SPEED:Float = PlayState.CELL_SIZE * 10;
+	static final GRAVITY:Float = PlayState.CELL_SIZE * 30;
 
 	var looking_at:Direction;
 	var jumping:Bool;
-	var tiles:FlxTilemap;
+	var parent:PlayState;
 
-	public function new(x:Float = 0, y:Float = 0, tiles:FlxTilemap)
+	public function new(x:Float = 0, y:Float = 0, parent:PlayState)
 	{
 		super(x, y);
-		this.tiles = tiles;
+		this.parent = parent;
 
 		this.looking_at = Direction.Right;
 		this.jumping = false;
@@ -35,14 +34,14 @@ class Player extends FlxSprite
 		acceleration.y = GRAVITY;
 		maxVelocity.x = MOVE_SPEED;
 		maxVelocity.y = JUMP_SPEED;
-		makeGraphic(32, 32, FlxColor.BLUE);
+		makeGraphic(PlayState.CELL_SIZE, PlayState.CELL_SIZE, FlxColor.BLUE);
 	}
 
 	override public function update(elapsed:Float):Void
 	{
-		FlxG.collide(this, tiles);
 		movement();
 		super.update(elapsed);
+		FlxG.collide(this, parent.blocks);
 	}
 
 	function movement():Void
@@ -69,13 +68,12 @@ class Player extends FlxSprite
 		else if (_right)
 			looking_at = Direction.Right;
 
-		acceleration.x = 0;
+		velocity.x = 0;
 		if (_left)
-			acceleration.x = -maxVelocity.x * 4;
+			velocity.x = -MOVE_SPEED;
 		else if (_right)
-			acceleration.x = maxVelocity.x * 4;
+			velocity.x = MOVE_SPEED;
 
-		acceleration.y = GRAVITY;
 		if (this.isTouching(FlxObject.FLOOR))
 		{
 			if (_jump)
@@ -86,7 +84,6 @@ class Player extends FlxSprite
 			else
 			{
 				jumping = false;
-				acceleration.y = 0;
 			}
 		}
 	}
