@@ -1,16 +1,13 @@
-package;
-
-import flixel.util.FlxColor;
+package blocks;
 
 class BlockSnow extends Block
 {
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.totalHits = 10;
+		this.currentHits = this.totalHits;
+
 		loadGraphic(AssetPaths.blocksnow__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
-
-	override function hit(amount:Int):Void {}
-
-	override function breakblock():Void {}
 }
