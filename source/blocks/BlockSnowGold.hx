@@ -10,4 +10,10 @@ class BlockSnowGold extends Block
 
 		loadGraphic(AssetPaths.blocksnowgold__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
+
+	override public function breakblock():Void
+	{
+		parent.add(new Gold(x + width / 2 - 4, y + height / 2 - 2));
+		destroy();
+	}
 }

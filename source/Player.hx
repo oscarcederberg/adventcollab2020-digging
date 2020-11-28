@@ -27,12 +27,12 @@ class Player extends FlxSprite
 	var pickaxe:Pickaxe;
 	var parent:PlayState;
 
-	public function new(x:Float = 0, y:Float = 0, parent:PlayState)
+	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.parent = cast(FlxG.state);
 		this.pickaxe = new Pickaxe(x, y, this, 3, 4);
 		parent.add(pickaxe);
-		this.parent = parent;
 
 		this.looking_at = Direction.Right;
 		this.jumping = false;

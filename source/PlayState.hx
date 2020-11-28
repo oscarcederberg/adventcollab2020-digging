@@ -2,7 +2,6 @@ package;
 
 import blocks.*;
 import flixel.FlxG;
-import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup;
@@ -12,13 +11,15 @@ class PlayState extends FlxState
 	public static final CELL_SIZE:Int = 32;
 	public static final CELL_SCALE:Float = CELL_SIZE / 32;
 
-	var player:Player;
 	var map:FlxOgmo3Loader;
 
+	public var player:Player;
+	public var score:Int;
 	public var blocks:FlxTypedGroup<Block>;
 
 	override public function create()
 	{
+		score = 0;
 		blocks = new FlxTypedGroup<Block>();
 		map = new FlxOgmo3Loader(AssetPaths.AdventCollab20_Digging__ogmo, AssetPaths.level_test__json);
 
@@ -38,19 +39,24 @@ class PlayState extends FlxState
 
 	function placeEntities(entity:EntityData)
 	{
-		var en_x = entity.x * CELL_SCALE;
-		var en_y = entity.y * CELL_SCALE;
+		var real_x = entity.x * CELL_SCALE;
+		var real_y = entity.y * CELL_SCALE;
 		switch (entity.name)
 		{
 			case "player":
-				player = new Player(en_x, en_y, this);
+				player = new Player(real_x, real_y);
 				add(player);
 			case "snow":
-				var block = new BlockSnow(en_x, en_y);
+				var block = new BlockSnow(real_x, real_y);
 				blocks.add(block);
 			case "snow_gold":
-				var block = new BlockSnowGold(en_x, en_y);
+				var block = new BlockSnowGold(real_x, real_y);
 				blocks.add(block);
 		}
+	}
+
+	public function updateScore(score:Int)
+	{
+		this.score += score;
 	}
 }
