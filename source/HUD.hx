@@ -17,8 +17,10 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 		this.scoreCounter = new FlxText(8, 8, 0, "Score: 0", 16);
+		this.scoreCounter.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
 		this.scoreCounter.scrollFactor.set(0, 0);
 		this.timeCounter = new FlxText(FlxG.width - 40, 8, 0, "300", 16);
+		this.timeCounter.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
 		this.timeCounter.scrollFactor.set(0, 0);
 
 		add(scoreCounter);

@@ -34,6 +34,7 @@ class PlayState extends FlxState
 	public var score:Int;
 	public var time:FlxTimer;
 	public var blocks:FlxTypedGroup<Block>;
+	public var enemies:FlxTypedGroup<Enemy>;
 	public var bounds:FlxGroup;
 
 	override public function create()
@@ -64,8 +65,11 @@ class PlayState extends FlxState
 				}
 			}
 		}
+		this.enemies = new FlxTypedGroup<Enemy>();
+
 		this.map.loadEntities(placeEntities, "entities");
 		add(this.blocks);
+		add(this.enemies);
 
 		FlxG.camera.follow(player, TOPDOWN, 1);
 		FlxG.camera.setScrollBoundsRect(0, 0, 320, 99999);
@@ -91,7 +95,7 @@ class PlayState extends FlxState
 				player = new Player(real_x, real_y);
 				add(player);
 			case "enemy":
-				add(new Enemy(real_x, real_y));
+				enemies.add(new Enemy(real_x, real_y));
 		}
 	}
 

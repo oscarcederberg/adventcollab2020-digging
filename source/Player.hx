@@ -8,6 +8,8 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+using flixel.util.FlxSpriteUtil;
+
 class Player extends FlxSprite
 {
 	static final MOVE_SPEED:Float = PlayState.CELL_SIZE * 4;
@@ -113,11 +115,21 @@ class Player extends FlxSprite
 					digging = true;
 					new FlxTimer().start(1 / pickaxe.speed, function(timer) digging = false);
 				}
+				else
+				{
+					FlxG.overlap(pickaxe, parent.enemies, function(object1, object2) cast(object2, Enemy).hit(cast(object1, Pickaxe).strength));
+				}
 			}
 			else
 			{
 				jumping = false;
 			}
+		}
+
+		if (FlxG.overlap(this, parent.enemies) && !this.isFlickering())
+		{
+			parent.time.time -= 5;
+			this.flicker(2);
 		}
 	}
 }
