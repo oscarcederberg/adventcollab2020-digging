@@ -9,6 +9,14 @@ import flixel.tile.FlxTilemap;
 import flixel.util.FlxCollision;
 import flixel.util.FlxSpriteUtil;
 
+enum Direction
+{
+	Up;
+	Left;
+	Down;
+	Right;
+}
+
 class PlayState extends FlxState
 {
 	public static final CELL_SIZE:Int = 32;

@@ -1,19 +1,12 @@
 package;
 
+import PlayState.Direction;
 import blocks.*;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-
-enum Direction
-{
-	Up;
-	Left;
-	Down;
-	Right;
-}
 
 class Player extends FlxSprite
 {

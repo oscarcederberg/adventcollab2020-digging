@@ -15,7 +15,8 @@
       "gridCellsX": 10,
       "gridCellsY": 18,
       "entities": [
-        {"name": "player", "id": 0, "_eid": "67242234", "x": 64, "y": 160, "originX": 0, "originY": 0}
+        {"name": "player", "id": 0, "_eid": "67242234", "x": 64, "y": 160, "originX": 0, "originY": 0},
+        {"name": "enemy", "id": 1, "_eid": "67253204", "x": 192, "y": 352, "originX": 0, "originY": 0}
       ]
     },
     {
