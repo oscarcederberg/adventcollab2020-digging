@@ -1,6 +1,7 @@
 package;
 
 import blocks.*;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
@@ -36,9 +37,9 @@ class PlayState extends FlxState
 		score = 0;
 		blocks = new FlxTypedGroup<Block>();
 		map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_test__json);
-		bounds = FlxCollision.createCameraWall(FlxG.camera, true, 1, false);
-
+		bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
 		tiles = map.loadTilemap(AssetPaths.tiles__png, "blocks");
+
 		for (x in 0...tiles.widthInTiles)
 		{
 			for (y in 0...tiles.heightInTiles)
