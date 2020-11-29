@@ -5,6 +5,8 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup;
+import flixel.util.FlxCollision;
+import flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState
 {
@@ -16,16 +18,21 @@ class PlayState extends FlxState
 	public var player:Player;
 	public var score:Int;
 	public var blocks:FlxTypedGroup<Block>;
+	public var bounds:FlxGroup;
 
 	override public function create()
 	{
 		score = 0;
 		blocks = new FlxTypedGroup<Block>();
 		map = new FlxOgmo3Loader(AssetPaths.AdventCollab20_Digging__ogmo, AssetPaths.level_test__json);
+		bounds = FlxCollision.createCameraWall(FlxG.camera, true, 1, false);
 
 		map.loadEntities(placeEntities, "entities");
 		map.loadEntities(placeEntities, "blocks");
 		add(blocks);
+
+		FlxG.camera.follow(player, TOPDOWN, 1);
+		FlxG.camera.setScrollBoundsRect(0, 0, 320, 99999);
 		super.create();
 	}
 

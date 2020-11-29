@@ -48,8 +48,11 @@ class Player extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		movement();
+
 		super.update(elapsed);
+
 		FlxG.collide(this, parent.blocks);
+		FlxG.collide(this, parent.bounds);
 	}
 
 	function movement():Void
