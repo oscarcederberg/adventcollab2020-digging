@@ -2,6 +2,7 @@ package;
 
 import blocks.*;
 import flixel.FlxSprite;
+import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 
 class Pickaxe extends FlxSprite
@@ -18,6 +19,6 @@ class Pickaxe extends FlxSprite
 		this.speed = speed;
 		this.strength = strength;
 
-		makeGraphic(1, 1, FlxColor.RED);
+		makeGraphic(1, 1, FlxColor.TRANSPARENT);
 	}
 }

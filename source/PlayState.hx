@@ -9,6 +9,8 @@ import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxCollision;
 import flixel.util.FlxSpriteUtil;
+import flixel.util.FlxTimer;
+import flixel.util.FlxTimer;
 
 enum Direction
 {
@@ -28,17 +30,25 @@ class PlayState extends FlxState
 
 	public var player:Player;
 
+	public var HUD:HUD;
 	public var score:Int;
+	public var time:FlxTimer;
 	public var blocks:FlxTypedGroup<Block>;
 	public var bounds:FlxGroup;
 
 	override public function create()
 	{
-		score = 0;
-		blocks = new FlxTypedGroup<Block>();
-		map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_test__json);
-		bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
-		tiles = map.loadTilemap(AssetPaths.tiles__png, "blocks");
+		this.HUD = new HUD();
+		this.score = 0;
+		this.time = new FlxTimer();
+		this.time.start(300, finish, 1);
+		add(HUD);
+
+		this.blocks = new FlxTypedGroup<Block>();
+
+		this.map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_test__json);
+		this.bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
+		this.tiles = map.loadTilemap(AssetPaths.tiles__png, "blocks");
 
 		for (x in 0...tiles.widthInTiles)
 		{
@@ -54,8 +64,8 @@ class PlayState extends FlxState
 				}
 			}
 		}
-		map.loadEntities(placeEntities, "entities");
-		add(blocks);
+		this.map.loadEntities(placeEntities, "entities");
+		add(this.blocks);
 
 		FlxG.camera.follow(player, TOPDOWN, 1);
 		FlxG.camera.setScrollBoundsRect(0, 0, 320, 99999);
@@ -66,6 +76,7 @@ class PlayState extends FlxState
 	{
 		if (FlxG.keys.anyPressed([R]))
 			FlxG.switchState(new PlayState());
+		HUD.updateHUD(score, Std.int(time.timeLeft));
 
 		super.update(elapsed);
 	}
@@ -87,5 +98,10 @@ class PlayState extends FlxState
 	public function updateScore(score:Int)
 	{
 		this.score += score;
+	}
+
+	public function finish(timer:FlxTimer)
+	{
+		// donothing
 	}
 }

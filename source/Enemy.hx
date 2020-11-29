@@ -9,6 +9,7 @@ import flixel.util.FlxColor;
 class Enemy extends FlxSprite
 {
 	static final MOVE_SPEED:Float = PlayState.CELL_SIZE * 2;
+	static final JUMP_SPEED:Float = PlayState.CELL_SIZE * 10;
 	static final GRAVITY:Float = PlayState.CELL_SIZE * 30;
 
 	public var totalHits:Int;
@@ -26,6 +27,7 @@ class Enemy extends FlxSprite
 		acceleration.y = GRAVITY;
 		velocity.x = MOVE_SPEED;
 		maxVelocity.x = MOVE_SPEED;
+		maxVelocity.y = JUMP_SPEED;
 
 		makeGraphic(PlayState.CELL_SIZE, PlayState.CELL_SIZE, FlxColor.RED);
 	}
