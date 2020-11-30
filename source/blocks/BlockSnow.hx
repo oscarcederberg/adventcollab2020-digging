@@ -8,6 +8,6 @@ class BlockSnow extends Block
 		this.totalHits = 10;
 		this.currentHits = this.totalHits;
 
-		loadGraphic(AssetPaths.blocksnow__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(AssetPaths.spr_block__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 }

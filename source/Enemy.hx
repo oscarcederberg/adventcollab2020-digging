@@ -1,10 +1,10 @@
 package;
 
-import PlayState.Direction;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -19,14 +19,13 @@ class Enemy extends FlxSprite
 	public var totalHits:Int;
 	public var currentHits:Int;
 
-	var looking_at:Direction;
 	var parent:PlayState;
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
 		this.parent = cast(FlxG.state);
-		this.looking_at = Direction.Right;
+		this.facing = FlxObject.RIGHT;
 
 		this.totalHits = 10;
 		this.currentHits = this.totalHits;
@@ -36,7 +35,14 @@ class Enemy extends FlxSprite
 		maxVelocity.x = MOVE_SPEED;
 		maxVelocity.y = JUMP_SPEED;
 
-		makeGraphic(PlayState.CELL_SIZE, PlayState.CELL_SIZE, FlxColor.RED);
+		loadGraphic(AssetPaths.spr_enemy_gov__png, true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		setSize(28, 32);
+		centerOffsets();
+		setFacingFlip(FlxObject.LEFT, true, false);
+		setFacingFlip(FlxObject.RIGHT, false, false);
+		animation.add("idle", [0]);
+		animation.add("walk", [1, 0], 4, true);
+		animation.play("walk");
 	}
 
 	override public function update(elapsed:Float):Void
@@ -51,19 +57,19 @@ class Enemy extends FlxSprite
 
 	function movement():Void
 	{
-		switch (looking_at)
+		switch (facing)
 		{
-			case Direction.Left:
+			case FlxObject.LEFT:
 				if (this.isTouching(FlxObject.LEFT))
 				{
-					velocity.x = MOVE_SPEED;
-					looking_at = Direction.Right;
+					animation.play("idle");
+					new FlxTimer().start(0.4, turn);
 				}
-			case Direction.Right:
+			case FlxObject.RIGHT:
 				if (this.isTouching(FlxObject.RIGHT))
 				{
-					velocity.x = -MOVE_SPEED;
-					looking_at = Direction.Left;
+					animation.play("idle");
+					new FlxTimer().start(0.4, turn);
 				}
 			default:
 		}
@@ -85,14 +91,29 @@ class Enemy extends FlxSprite
 				if (parent.player.x < x)
 				{
 					velocity.x = MOVE_SPEED;
-					looking_at = Direction.Right;
+					facing = FlxObject.RIGHT;
 				}
 				else
 				{
 					velocity.x = -MOVE_SPEED;
-					looking_at = Direction.Left;
+					facing = FlxObject.LEFT;
 				}
 			}
+		}
+	}
+
+	function turn(flxtimer:FlxTimer)
+	{
+		animation.play("walk");
+		if (facing == FlxObject.RIGHT)
+		{
+			velocity.x = -MOVE_SPEED;
+			facing = FlxObject.LEFT;
+		}
+		else
+		{
+			velocity.x = MOVE_SPEED;
+			facing = FlxObject.RIGHT;
 		}
 	}
 }
