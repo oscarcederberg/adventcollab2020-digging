@@ -38,7 +38,7 @@ class Player extends FlxSprite
 		maxVelocity.y = JUMP_SPEED;
 
 		loadGraphic(AssetPaths.spr_player__png, true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-		setSize(26, 26);
+		setSize(20, 26);
 		centerOffsets();
 		offset.set(offset.x, 6);
 		setFacingFlip(FlxObject.LEFT, true, false);
@@ -46,7 +46,9 @@ class Player extends FlxSprite
 		animation.add("idle", [0]);
 		animation.add("jump", [1]);
 		animation.add("walk", [1, 0], 4, true);
-		animation.add("dig", [2, 3, 4], 8, true);
+		animation.add("dig_side", [2, 3, 4], 8, true);
+		animation.add("dig_down", [5, 6, 7], 8, true);
+		animation.add("dig_up", [8, 9, 10], 8, true);
 		animation.play("idle");
 	}
 
@@ -175,7 +177,15 @@ class Player extends FlxSprite
 		}
 		else if (digging)
 		{
-			animation.play("dig");
+			switch (looking_at)
+			{
+				case FlxObject.UP:
+					animation.play("dig_up");
+				case FlxObject.DOWN:
+					animation.play("dig_down");
+				default:
+					animation.play("dig_side");
+			}
 		}
 	}
 }
