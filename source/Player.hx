@@ -72,7 +72,7 @@ class Player extends FlxSprite
 
 		if (FlxG.overlap(this, parent.enemies) && !this.isFlickering())
 		{
-			parent.time.time -= 5;
+			parent.time.time -= 15;
 			this.flicker(2);
 		}
 

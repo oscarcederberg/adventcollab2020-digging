@@ -83,6 +83,8 @@ class PlayState extends FlxState
 						blocks.add(new BlockSnow(x * 32, y * 32));
 					case 2:
 						blocks.add(new BlockSnowGift(x * 32, y * 32));
+					case 3:
+						blocks.add(new BlockSnowSurface(x * 32, y * 32));
 				}
 			}
 		}
