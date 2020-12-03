@@ -3,6 +3,7 @@ package;
 import blocks.BlockSnowGift.GiftColors;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 
 class Gift extends FlxSprite
 {
@@ -11,6 +12,8 @@ class Gift extends FlxSprite
 
 	var giftColor:GiftColors;
 	var parent:PlayState;
+
+	var sfx_pickup:FlxSound;
 
 	public function new(x:Float = 0, y:Float = 0, giftColor:GiftColors)
 	{
@@ -32,6 +35,8 @@ class Gift extends FlxSprite
 			case Blue:
 				loadGraphic(AssetPaths.spr_gift_blue__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		}
+
+		sfx_pickup = FlxG.sound.load(AssetPaths.sfx_pickup__wav);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -46,6 +51,7 @@ class Gift extends FlxSprite
 
 	public function pickup()
 	{
+		sfx_pickup.play();
 		parent.updateScore(SCORE);
 		destroy();
 	}
