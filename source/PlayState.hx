@@ -80,7 +80,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(enemies, tiles);
 		FlxG.collide(enemies, bounds);
-		FlxG.overlap(player, pickups, (_, pickup) -> pickup.puckup());
+		FlxG.overlap(player, pickups,(_, pickup:Pickup) -> pickup.pickup());
 		FlxG.collide(pickups, tiles);
 
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
