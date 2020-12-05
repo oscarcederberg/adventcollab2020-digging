@@ -189,20 +189,26 @@ class Player extends FlxSprite
 					sfx_step.play();
 				}
 				else
+				{
 					animation.play("idle");
+					sfx_step.stop();
+				}
 			}
 			else
 			{
 				animation.play("jump");
+				sfx_step.stop();
 			}
 		}
 		else if (jumping || velocity.y != 0)
 		{
+			sfx_step.stop();
 			if (!this.isTouching(FlxObject.CEILING) && !this.isTouching(FlxObject.FLOOR))
 				animation.play("jump");
 		}
 		else if (digging)
 		{
+			sfx_step.stop();
 			switch (looking_at)
 			{
 				case FlxObject.UP:

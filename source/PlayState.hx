@@ -91,6 +91,8 @@ class PlayState extends FlxState
 						tiles.add(new BlockEnemy(x * 32, y * 32));
 					case 6:
 						tiles.add(new Snow(x * 32, y * 32));
+					case 7:
+						tiles.add(new Stone(x * 32, y * 32));
 				}
 			}
 		}
