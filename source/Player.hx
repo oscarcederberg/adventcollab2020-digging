@@ -1,12 +1,12 @@
 package;
 
-import blocks.*;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import tiles.*;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -32,7 +32,7 @@ class Player extends FlxSprite
 	{
 		super(x, y);
 		this.parent = cast(FlxG.state);
-		this.pickaxe = new Pickaxe(x, y, this, 3, 4);
+		this.pickaxe = new Pickaxe(x, y, this, 3, 1);
 		parent.add(pickaxe);
 
 		this.facing = FlxObject.RIGHT;
@@ -94,7 +94,7 @@ class Player extends FlxSprite
 
 		super.update(elapsed);
 
-		FlxG.collide(this, parent.blocks);
+		FlxG.collide(this, parent.tiles);
 		FlxG.collide(this, parent.bounds);
 	}
 
@@ -154,7 +154,7 @@ class Player extends FlxSprite
 			}
 			else if (_action && !_jump && !digging && !jumping)
 			{
-				if (FlxG.overlap(pickaxe, parent.blocks, function(object1, object2) cast(object2, Block).hit(cast(object1, Pickaxe).strength)))
+				if (FlxG.overlap(pickaxe, parent.tiles, function(object1, object2) cast(object2, Tile).hit(cast(object1, Pickaxe).strength)))
 				{
 					digging = true;
 					new FlxTimer().start(1 / pickaxe.speed, function(timer) digging = false);
@@ -181,13 +181,20 @@ class Player extends FlxSprite
 
 		if (!jumping && !digging)
 		{
-			if ((_left || _right) && !(_left && _right))
+			if (this.isTouching(FlxObject.FLOOR))
 			{
-				animation.play("walk");
-				sfx_step.play();
+				if ((_left || _right) && !(_left && _right))
+				{
+					animation.play("walk");
+					sfx_step.play();
+				}
+				else
+					animation.play("idle");
 			}
 			else
-				animation.play("idle");
+			{
+				animation.play("jump");
+			}
 		}
 		else if (jumping || velocity.y != 0)
 		{

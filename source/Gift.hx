@@ -1,9 +1,10 @@
 package;
 
-import blocks.BlockSnowGift.GiftColors;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
+import tiles.BrickGift.GiftColors;
 
 class Gift extends FlxSprite
 {
@@ -19,7 +20,20 @@ class Gift extends FlxSprite
 	{
 		super(x, y);
 		this.parent = cast(FlxG.state);
-		this.giftColor = giftColor;
+		if (giftColor == GiftColors.Random)
+		{
+			this.giftColor = new FlxRandom().getObject([
+				GiftColors.Green,
+				GiftColors.Purple,
+				GiftColors.Black,
+				GiftColors.Red,
+				GiftColors.Blue
+			]);
+		}
+		else
+		{
+			this.giftColor = giftColor;
+		}
 		acceleration.y = GRAVITY;
 
 		switch (giftColor)
@@ -34,6 +48,8 @@ class Gift extends FlxSprite
 				loadGraphic(AssetPaths.spr_gift_red__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 			case Blue:
 				loadGraphic(AssetPaths.spr_gift_blue__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+			default:
+				loadGraphic(AssetPaths.spr_gift_green__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		}
 
 		sfx_pickup = FlxG.sound.load(AssetPaths.sfx_pickup__wav);
@@ -42,7 +58,7 @@ class Gift extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		FlxG.collide(this, parent.blocks);
+		FlxG.collide(this, parent.tiles);
 		if (FlxG.pixelPerfectOverlap(this, parent.player))
 		{
 			pickup();

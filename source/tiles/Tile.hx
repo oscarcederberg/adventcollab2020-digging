@@ -1,9 +1,9 @@
-package blocks;
+package tiles;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-class Block extends FlxSprite
+class Tile extends FlxSprite
 {
 	public var totalHits:Int;
 	public var currentHits:Int;
@@ -20,10 +20,16 @@ class Block extends FlxSprite
 	public function hit(amount:Int):Void
 	{
 		this.currentHits -= amount;
+		updateTexture();
 		if (this.currentHits <= 0)
 		{
 			breakblock();
 		}
+	}
+
+	private function updateTexture():Void
+	{
+		// do nothing
 	}
 
 	public function breakblock():Void

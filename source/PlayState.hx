@@ -1,6 +1,5 @@
 package;
 
-import blocks.*;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -10,8 +9,9 @@ import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
-import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxTimer;
+import tiles.*;
+import tiles.BrickGift.GiftColors;
 
 class PlayState extends FlxState
 {
@@ -19,13 +19,13 @@ class PlayState extends FlxState
 	public static final CELL_SCALE:Float = CELL_SIZE / 32;
 
 	var map:FlxOgmo3Loader;
-	var tiles:FlxTilemap;
+	var tilemap:FlxTilemap;
 
 	public var player:Player;
 	public var HUD:HUD;
 	public var score:Int;
 	public var time:FlxTimer;
-	public var blocks:FlxTypedGroup<Block>;
+	public var tiles:FlxTypedGroup<Tile>;
 	public var enemies:FlxTypedGroup<Enemy>;
 	public var bounds:FlxGroup;
 
@@ -37,12 +37,12 @@ class PlayState extends FlxState
 		background.loadGraphic(AssetPaths.spr_background__png, true, 320, 512);
 		add(background);
 
-		this.blocks = new FlxTypedGroup<Block>();
+		this.tiles = new FlxTypedGroup<Tile>();
 		this.map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_test__json);
 		this.bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
-		this.tiles = map.loadTilemap(AssetPaths.tiles__png, "blocks");
-		placeBlocks();
-		add(this.blocks);
+		this.tilemap = map.loadTilemap(AssetPaths.tiles__png, "tiles");
+		placeTiles();
+		add(this.tiles);
 
 		this.enemies = new FlxTypedGroup<Enemy>();
 		this.map.loadEntities(placeEntities, "entities");
@@ -69,22 +69,28 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 
-	// we want to tiles from the transform layer to actual block entities instead of unbreakable tiles, this seems to be the only way?
-	function placeBlocks()
+	// we want to tiles from the transform layer to actual tile entities instead of unbreakable tiles, this seems to be the only way?
+	function placeTiles()
 	{
-		for (x in 0...tiles.widthInTiles)
+		for (x in 0...tilemap.widthInTiles)
 		{
-			for (y in 0...tiles.heightInTiles)
+			for (y in 0...tilemap.heightInTiles)
 			{
-				var tile:Int = tiles.getData()[y * tiles.widthInTiles + x];
+				var tile:Int = tilemap.getData()[y * tilemap.widthInTiles + x];
 				switch (tile)
 				{
 					case 1:
-						blocks.add(new BlockSnow(x * 32, y * 32));
+						tiles.add(new Brick(x * 32, y * 32));
 					case 2:
-						blocks.add(new BlockSnowGift(x * 32, y * 32));
+						tiles.add(new BrickGift(x * 32, y * 32));
 					case 3:
-						blocks.add(new BlockSnowSurface(x * 32, y * 32));
+						tiles.add(new BrickSurface(x * 32, y * 32));
+					case 4:
+						tiles.add(new Block(x * 32, y * 32));
+					case 5:
+						tiles.add(new BlockEnemy(x * 32, y * 32));
+					case 6:
+						tiles.add(new Snow(x * 32, y * 32));
 				}
 			}
 		}
@@ -101,6 +107,8 @@ class PlayState extends FlxState
 				add(player);
 			case "enemy":
 				enemies.add(new Enemy(real_x, real_y));
+			case "gift":
+				add(new Gift(real_x, real_y, GiftColors.Random));
 		}
 	}
 

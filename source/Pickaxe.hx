@@ -1,9 +1,9 @@
 package;
 
-import blocks.*;
 import flixel.FlxSprite;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
+import tiles.*;
 
 class Pickaxe extends FlxSprite
 {

@@ -27,7 +27,7 @@ class Enemy extends FlxSprite
 		this.parent = cast(FlxG.state);
 		this.facing = FlxObject.RIGHT;
 
-		this.totalHits = 10;
+		this.totalHits = 3;
 		this.currentHits = this.totalHits;
 
 		acceleration.y = GRAVITY;
@@ -51,7 +51,7 @@ class Enemy extends FlxSprite
 
 		super.update(elapsed);
 
-		FlxG.collide(this, parent.blocks);
+		FlxG.collide(this, parent.tiles);
 		FlxG.collide(this, parent.bounds);
 	}
 
