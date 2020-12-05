@@ -105,8 +105,8 @@ class Player extends FlxSprite
 		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
 		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
 
-		var _action:Bool = FlxG.keys.anyPressed([X, J]);
-		var _jump:Bool = FlxG.keys.anyJustPressed([C, K, SPACE]);
+		var _action:Bool = FlxG.keys.anyPressed([Z, J]);
+		var _jump:Bool = FlxG.keys.anyJustPressed([X, K, SPACE]);
 
 		velocity.x = 0;
 		if (!digging)
