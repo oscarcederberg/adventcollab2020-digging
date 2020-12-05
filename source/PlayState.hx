@@ -78,7 +78,10 @@ class PlayState extends FlxState
 		enemies.forEach(function(enemy:Enemy) enemy.active = enemy.isOnScreen());
 		pickups.forEach(function(pickup:Pickup) pickup.active = pickup.isOnScreen());
 
+		FlxG.collide(enemies, tiles);
+		FlxG.collide(enemies, bounds);
 		FlxG.overlap(player, pickups, (_, pickup) -> pickup.puckup());
+		FlxG.collide(pickups, tiles);
 
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
 		maxDepth = Std.int(Math.max(currentDepth, maxDepth));

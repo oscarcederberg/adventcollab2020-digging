@@ -29,9 +29,11 @@ class Gift extends Pickup
 			this.giftColor = giftColor;
 		}
 
-		setSize(20, 17);
-		centerOffsets();
-		offset.set(offset.x, 8);
+		/*
+			setSize(20, 18);
+			centerOffsets(true);
+			// offset.set(offset.x, -9);
+		 */
 
 		switch (giftColor)
 		{

@@ -50,9 +50,6 @@ class Enemy extends FlxSprite
 		movement();
 
 		super.update(elapsed);
-
-		FlxG.collide(this, parent.tiles);
-		FlxG.collide(this, parent.bounds);
 	}
 
 	function movement():Void

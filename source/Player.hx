@@ -174,6 +174,7 @@ class Player extends FlxSprite
 		}
 	}
 
+	// animate.... and play some sound hehe
 	function animate()
 	{
 		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);

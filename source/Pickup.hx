@@ -26,7 +26,6 @@ class Pickup extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		FlxG.collide(this, parent.tiles);
 	}
 
 	public function pickup()
