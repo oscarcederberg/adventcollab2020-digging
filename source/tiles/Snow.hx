@@ -9,6 +9,7 @@ class Snow extends Tile
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.score = 5;
 		this.totalHits = 1;
 		this.currentHits = this.totalHits;
 

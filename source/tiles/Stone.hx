@@ -9,6 +9,7 @@ class Stone extends Tile
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.score = 30;
 		this.totalHits = 5;
 		this.currentHits = this.totalHits;
 

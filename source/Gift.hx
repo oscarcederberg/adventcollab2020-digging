@@ -69,6 +69,7 @@ class Gift extends FlxSprite
 	{
 		sfx_pickup.play();
 		parent.updateScore(SCORE);
+		parent.giftsCollected++;
 		destroy();
 	}
 }

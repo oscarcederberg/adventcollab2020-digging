@@ -20,6 +20,7 @@ class BrickGift extends Tile
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.score = 15;
 		this.totalHits = 3;
 		this.currentHits = this.totalHits;
 
@@ -68,6 +69,6 @@ class BrickGift extends Tile
 	override public function breakblock():Void
 	{
 		parent.add(new Gift(x, y - 9, giftColor));
-		destroy();
+		super.breakblock();
 	}
 }

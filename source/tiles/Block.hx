@@ -9,6 +9,7 @@ class Block extends Tile
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.score = 15;
 		this.totalHits = 3;
 		this.currentHits = this.totalHits;
 

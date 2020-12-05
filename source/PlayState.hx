@@ -21,10 +21,15 @@ class PlayState extends FlxState
 	var map:FlxOgmo3Loader;
 	var tilemap:FlxTilemap;
 
-	public var player:Player;
-	public var HUD:HUD;
 	public var score:Int;
 	public var time:FlxTimer;
+	public var giftsCollected:Int;
+	public var blocksDestroyed:Int;
+	public var enemiesKilled:Int;
+	public var maxDepth:Int;
+
+	public var player:Player;
+	public var HUD:HUD;
 	public var tiles:FlxTypedGroup<Tile>;
 	public var enemies:FlxTypedGroup<Enemy>;
 	public var bounds:FlxGroup;
@@ -53,6 +58,11 @@ class PlayState extends FlxState
 
 		this.HUD = new HUD();
 		this.score = 0;
+		this.giftsCollected = 0;
+		this.blocksDestroyed = 0;
+		this.enemiesKilled = 0;
+		this.maxDepth = 0;
+
 		this.time = new FlxTimer();
 		this.time.start(300, endGame, 1);
 		add(HUD);
@@ -62,9 +72,14 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
+		maxDepth = Std.int(Math.max(currentDepth, maxDepth));
+		HUD.updateHUD(score, Std.int(time.timeLeft));
+
 		if (FlxG.keys.anyPressed([R]))
 			FlxG.switchState(new PlayState());
-		HUD.updateHUD(score, Std.int(time.timeLeft));
+		if (FlxG.keys.anyPressed([Q]))
+			FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
 
 		super.update(elapsed);
 	}
@@ -93,6 +108,8 @@ class PlayState extends FlxState
 						tiles.add(new Snow(x * 32, y * 32));
 					case 7:
 						tiles.add(new Stone(x * 32, y * 32));
+					case 8:
+						tiles.add(new StoneGiftBig(x * 32, y * 32));
 				}
 			}
 		}
@@ -111,6 +128,8 @@ class PlayState extends FlxState
 				enemies.add(new Enemy(real_x, real_y));
 			case "gift":
 				add(new Gift(real_x, real_y, GiftColors.Random));
+			case "gift_big":
+				add(new GiftBig(real_x, real_y));
 		}
 	}
 
@@ -121,6 +140,6 @@ class PlayState extends FlxState
 
 	public function endGame(timer:FlxTimer)
 	{
-		FlxG.switchState(new EndState(score));
+		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
 	}
 }

@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 
 class Tile extends FlxSprite
 {
+	public var score:Int;
 	public var totalHits:Int;
 	public var currentHits:Int;
 
@@ -13,6 +14,7 @@ class Tile extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+		this.score = 0;
 		this.parent = cast(FlxG.state);
 		immovable = true;
 	}
@@ -34,6 +36,8 @@ class Tile extends FlxSprite
 
 	public function breakblock():Void
 	{
+		parent.updateScore(score);
+		parent.blocksDestroyed++;
 		destroy();
 	}
 }
