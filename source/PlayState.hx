@@ -32,11 +32,12 @@ class PlayState extends FlxState
 	public var HUD:HUD;
 	public var tiles:FlxTypedGroup<Tile>;
 	public var enemies:FlxTypedGroup<Enemy>;
+	public var pickups:FlxTypedGroup<Pickup>;
 	public var bounds:FlxGroup;
 
 	override public function create()
 	{
-		this.bgColor = FlxColor.WHITE;
+		this.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
 
 		var background:FlxSprite = new FlxSprite(0, 0);
 		background.loadGraphic(AssetPaths.spr_background__png, true, 320, 512);
@@ -50,8 +51,10 @@ class PlayState extends FlxState
 		add(this.tiles);
 
 		this.enemies = new FlxTypedGroup<Enemy>();
+		this.pickups = new FlxTypedGroup<Pickup>();
 		this.map.loadEntities(placeEntities, "entities");
 		add(this.enemies);
+		add(this.pickups);
 
 		FlxG.camera.follow(player, TOPDOWN, 1);
 		FlxG.camera.setScrollBoundsRect(0, 0, 320, 99999);
@@ -72,6 +75,11 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		enemies.forEach(function(enemy:Enemy) enemy.active = enemy.isOnScreen());
+		pickups.forEach(function(pickup:Pickup) pickup.active = pickup.isOnScreen());
+
+		FlxG.overlap(player, pickups, (_, pickup) -> pickup.puckup());
+
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
 		maxDepth = Std.int(Math.max(currentDepth, maxDepth));
 		HUD.updateHUD(score, Std.int(time.timeLeft));
@@ -110,6 +118,10 @@ class PlayState extends FlxState
 						tiles.add(new Stone(x * 32, y * 32));
 					case 8:
 						tiles.add(new StoneGiftBig(x * 32, y * 32));
+					case 9:
+						tiles.add(new BedrockStart(x * 32, y * 32));
+					case 10:
+						tiles.add(new Bedrock(x * 32, y * 32));
 				}
 			}
 		}
@@ -127,9 +139,9 @@ class PlayState extends FlxState
 			case "enemy":
 				enemies.add(new Enemy(real_x, real_y));
 			case "gift":
-				add(new Gift(real_x, real_y, GiftColors.Random));
+				pickups.add(new Gift(real_x, real_y, GiftColors.Random));
 			case "gift_big":
-				add(new GiftBig(real_x, real_y));
+				pickups.add(new GiftBig(real_x, real_y));
 		}
 	}
 

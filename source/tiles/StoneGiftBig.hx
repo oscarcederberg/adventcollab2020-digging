@@ -1,7 +1,6 @@
 package tiles;
 
 import flixel.math.FlxRandom;
-import haxe.macro.Expr.Case;
 
 class StoneGiftBig extends Tile
 {
@@ -34,7 +33,7 @@ class StoneGiftBig extends Tile
 
 	override public function breakblock():Void
 	{
-		parent.add(new GiftBig(x, y - 4));
+		parent.pickups.add(new GiftBig(x, y - 4));
 		super.breakblock();
 	}
 }

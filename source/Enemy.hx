@@ -84,7 +84,7 @@ class Enemy extends FlxSprite
 			{
 				parent.updateScore(SCORE);
 				parent.enemiesKilled++;
-				destroy();
+				kill();
 			}
 			else
 			{

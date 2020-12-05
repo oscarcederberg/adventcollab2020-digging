@@ -6,20 +6,14 @@ import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 import tiles.BrickGift.GiftColors;
 
-class Gift extends FlxSprite
+class Gift extends Pickup
 {
-	public static final SCORE:Int = 400;
-	static final GRAVITY:Float = PlayState.CELL_SIZE * 30;
-
 	var giftColor:GiftColors;
-	var parent:PlayState;
-
-	var sfx_pickup:FlxSound;
 
 	public function new(x:Float = 0, y:Float = 0, giftColor:GiftColors)
 	{
 		super(x, y);
-		this.parent = cast(FlxG.state);
+
 		if (giftColor == GiftColors.Random)
 		{
 			this.giftColor = new FlxRandom().getObject([
@@ -34,7 +28,10 @@ class Gift extends FlxSprite
 		{
 			this.giftColor = giftColor;
 		}
-		acceleration.y = GRAVITY;
+
+		setSize(20, 17);
+		centerOffsets();
+		offset.set(offset.x, 8);
 
 		switch (giftColor)
 		{
@@ -51,25 +48,5 @@ class Gift extends FlxSprite
 			default:
 				loadGraphic(AssetPaths.spr_gift_green__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		}
-
-		sfx_pickup = FlxG.sound.load(AssetPaths.sfx_pickup__wav);
-	}
-
-	override public function update(elapsed:Float):Void
-	{
-		super.update(elapsed);
-		FlxG.collide(this, parent.tiles);
-		if (FlxG.pixelPerfectOverlap(this, parent.player))
-		{
-			pickup();
-		}
-	}
-
-	public function pickup()
-	{
-		sfx_pickup.play();
-		parent.updateScore(SCORE);
-		parent.giftsCollected++;
-		destroy();
 	}
 }

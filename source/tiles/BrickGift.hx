@@ -68,7 +68,7 @@ class BrickGift extends Tile
 
 	override public function breakblock():Void
 	{
-		parent.add(new Gift(x, y - 9, giftColor));
+		parent.pickups.add(new Gift(x, y - 9, giftColor));
 		super.breakblock();
 	}
 }
