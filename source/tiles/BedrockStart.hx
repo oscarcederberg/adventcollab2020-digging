@@ -13,7 +13,7 @@ class BedrockStart extends Tile
 		this.totalHits = 999;
 		this.currentHits = this.totalHits;
 
-		loadGraphic(AssetPaths.spr_bedrock_start__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_bedrock_start.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 
 	override public function hit(amount:Int):Void

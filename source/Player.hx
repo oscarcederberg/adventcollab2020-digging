@@ -44,7 +44,7 @@ class Player extends FlxSprite
 		maxVelocity.x = MOVE_SPEED;
 		maxVelocity.y = JUMP_SPEED;
 
-		loadGraphic(AssetPaths.spr_player__png, true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_player.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		setSize(WIDTH, HEIGHT);
 		centerOffsets();
 		offset.set(offset.x, 6);
@@ -60,9 +60,9 @@ class Player extends FlxSprite
 		animation.add("dig_up", [10, 11, 12], 8, true);
 		animation.play("idle");
 
-		sfx_step = FlxG.sound.load(AssetPaths.sfx_step__wav);
-		sfx_hit_1 = FlxG.sound.load(AssetPaths.sfx_hit_1__wav);
-		sfx_damage = FlxG.sound.load(AssetPaths.sfx_damage__wav);
+		sfx_step = FlxG.sound.load("assets/sounds/sfx_step.wav");
+		sfx_hit_1 = FlxG.sound.load("assets/sounds/sfx_hit_1.wav");
+		sfx_damage = FlxG.sound.load("assets/sounds/sfx_damage.wav");
 	}
 
 	override public function update(elapsed:Float):Void

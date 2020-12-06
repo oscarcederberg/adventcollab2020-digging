@@ -13,7 +13,7 @@ class BlockEnemy extends Tile
 		this.totalHits = 4;
 		this.currentHits = this.totalHits;
 
-		loadGraphic(AssetPaths.spr_block_enemy__png, true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_block_enemy.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		animation.add("hit_0", [0]);
 		animation.add("hit_1", [1]);
 		animation.add("hit_2", [2]);

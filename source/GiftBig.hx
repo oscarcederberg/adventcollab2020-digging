@@ -15,6 +15,6 @@ class GiftBig extends Pickup
 		super(x, y);
 		this.score = 600;
 
-		loadGraphic(AssetPaths.spr_gift_big__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_gift_big.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 }

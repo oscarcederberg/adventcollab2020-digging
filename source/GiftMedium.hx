@@ -15,6 +15,6 @@ class GiftMedium extends Pickup
 		super(x, y);
 		this.score = 300;
 
-		loadGraphic(AssetPaths.spr_gift_medium__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_gift_medium.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 }
