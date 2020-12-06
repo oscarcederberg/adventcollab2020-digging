@@ -27,6 +27,8 @@
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
+	<define name="STAND_ALONE" />
+
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
 	<assets path="assets" />
