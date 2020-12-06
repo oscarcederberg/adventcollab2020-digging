@@ -53,9 +53,11 @@ class Player extends FlxSprite
 		animation.add("idle", [0]);
 		animation.add("jump", [1]);
 		animation.add("walk", [1, 0], 4, true);
-		animation.add("dig_side", [2, 3, 4], 8, true);
-		animation.add("dig_down", [5, 6, 7], 8, true);
-		animation.add("dig_up", [8, 9, 10], 8, true);
+		animation.add("look_down", [2]);
+		animation.add("look_up", [3]);
+		animation.add("dig_side", [4, 5, 6], 8, true);
+		animation.add("dig_down", [7, 8, 9], 8, true);
+		animation.add("dig_up", [10, 11, 12], 8, true);
 		animation.play("idle");
 
 		sfx_step = FlxG.sound.load(AssetPaths.sfx_step__wav);
@@ -176,17 +178,32 @@ class Player extends FlxSprite
 	// animate.... and play some sound hehe
 	function animate()
 	{
+		var _up:Bool = FlxG.keys.anyPressed([UP, W,]);
+		var _down:Bool = FlxG.keys.anyPressed([DOWN, S]);
 		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
 		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
+
+		if (_up && _down)
+			_up = _down = false;
+		if (_left && _right)
+			_left = _right = false;
 
 		if (!jumping && !digging)
 		{
 			if (this.isTouching(FlxObject.FLOOR))
 			{
-				if ((_left || _right) && !(_left && _right))
+				if (_left || _right)
 				{
 					animation.play("walk");
 					sfx_step.play();
+				}
+				else if (_up)
+				{
+					animation.play("look_up");
+				}
+				else if (_down)
+				{
+					animation.play("look_down");
 				}
 				else
 				{
