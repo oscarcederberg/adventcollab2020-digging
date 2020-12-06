@@ -8,6 +8,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+using flixel.util.FlxSpriteUtil;
+
 class HUD extends FlxTypedGroup<FlxSprite>
 {
 	var scoreCounter:FlxText;
@@ -29,6 +31,11 @@ class HUD extends FlxTypedGroup<FlxSprite>
 
 	public function updateHUD(score:Int, timeLeft:Int)
 	{
+		if (timeLeft <= 60 && !timeCounter.isFlickering())
+		{
+			timeCounter.flicker(0, 0.25);
+			timeCounter.color = FlxColor.RED;
+		}
 		scoreCounter.text = "Score: " + score;
 		timeCounter.text = Std.string(timeLeft);
 	}
