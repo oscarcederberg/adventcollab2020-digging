@@ -15,9 +15,9 @@ import tiles.BrickGift.GiftColors;
 
 class PlayState extends FlxState
 {
-	inline static var WINDOW_WIDTH = 480;
-	inline static var GAME_WIDTH = 320;
-	inline static var WING_WIDTH = (WINDOW_WIDTH - GAME_WIDTH) / 2;
+	inline public static var WINDOW_WIDTH = 480;
+	inline public static var GAME_WIDTH = 320;
+	inline public static var WING_WIDTH = (WINDOW_WIDTH - GAME_WIDTH) / 2;
 
 	public static final CELL_SIZE:Int = 32;
 	public static final CELL_SCALE:Float = CELL_SIZE / 32;

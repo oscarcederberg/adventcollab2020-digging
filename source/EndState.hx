@@ -1,59 +1,65 @@
 package;
 
 import blocks.*;
+
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.text.FlxText;
 import flixel.ui.FlxButton;
-import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
+import flixel.text.FlxBitmapText;
 
 class EndState extends FlxState
 {
-	var gameOverText:FlxText;
-	var scoreText:FlxText;
-	var giftsText:FlxText;
-	var blocksText:FlxText;
-	var enemiesText:FlxText;
-	var depthText:FlxText;
-	var playButton:FlxButton;
-
 	public function new(score:Int, giftsCollected:Int, blocksDestroyed:Int, enemiesKilled:Int, maxDepth:Int)
 	{
 		super();
 
-		this.gameOverText = new FlxText(0, 4 * 540 / 32, 0, 32);
-		this.gameOverText.text = "GAME OVER";
-		this.gameOverText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		this.gameOverText.screenCenter(FlxAxes.X);
+		var font = new ui.DigFont.DigNokiaFont16();
+		// var gameOverText = new FlxText(0, 0, 0, 32);
+		var gameOverText = new FlxBitmapText(font);
+		gameOverText.scale.set(2, 2);
+		gameOverText.y = 4 * 540 / 32;
+		gameOverText.text = "GAME OVER";
+		gameOverText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
+		gameOverText.screenCenter(X);
 
-		this.scoreText = new FlxText(0, 7 * 540 / 32, 0, 16);
-		this.scoreText.text = "Final Score: " + score;
-		this.scoreText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		this.scoreText.screenCenter(FlxAxes.X);
+		// var scoreText = new FlxText(0, 0, 0, 16);
+		var scoreText = new FlxBitmapText(font);
+		scoreText.y = 7 * 540 / 32;
+		scoreText.text = "Final Score: " + score;
+		scoreText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
+		scoreText.screenCenter(X);
 
-		this.giftsText = new FlxText(0, 8 * 540 / 32, 0, 16);
-		this.giftsText.text = "Gifts Collected: " + giftsCollected;
-		this.giftsText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		this.giftsText.screenCenter(FlxAxes.X);
+		// var giftsText = new FlxText(0, 0, 0, 16);
+		var giftsText = new FlxBitmapText(font);
+		giftsText.y = 8 * 540 / 32;
+		giftsText.text = "Gifts Collected: " + giftsCollected;
+		giftsText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
+		giftsText.screenCenter(X);
 
-		this.blocksText = new FlxText(0, 9 * 540 / 32, 0, 16);
-		this.blocksText.text = "Blocks Destroyed: " + blocksDestroyed;
-		this.blocksText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		this.blocksText.screenCenter(FlxAxes.X);
+		// var blocksText = new FlxText(0, 0, 0, 16);
+		var blocksText = new FlxBitmapText(font);
+		blocksText.y = 9 * 540 / 32;
+		blocksText.text = "Blocks Destroyed: " + blocksDestroyed;
+		blocksText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
+		blocksText.screenCenter(X);
 
-		this.enemiesText = new FlxText(0, 10 * 540 / 32, 0, 16);
-		this.enemiesText.text = "Enemies Killed: " + enemiesKilled;
-		this.enemiesText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		this.enemiesText.screenCenter(FlxAxes.X);
+		// var enemiesText = new FlxText(0, 0, 0, 16);
+		var enemiesText = new FlxBitmapText(font);
+		enemiesText.y = 10 * 540 / 32;
+		enemiesText.text = "Enemies Killed: " + enemiesKilled;
+		enemiesText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
+		enemiesText.screenCenter(X);
 
-		this.depthText = new FlxText(0, 11 * 540 / 32, 0, 16);
-		this.depthText.text = "Depth Dug: " + maxDepth + " meters";
-		this.depthText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		this.depthText.screenCenter(FlxAxes.X);
+		// var depthText = new FlxText(0, 0, 0, 16);
+		var depthText = new FlxBitmapText(font);
+		depthText.y = 11 * 540 / 32;
+		depthText.text = "Depth Dug: " + maxDepth + " meters";
+		depthText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
+		depthText.screenCenter(X);
 
-		this.playButton = new FlxButton(0, 13 * 540 / 32, "Restart", clickRestart);
-		this.playButton.screenCenter(FlxAxes.X);
+		var playButton = new FlxButton(0, 13 * 540 / 32, "Restart", clickRestart);
+		playButton.screenCenter(X);
 
 		add(gameOverText);
 		add(scoreText);
