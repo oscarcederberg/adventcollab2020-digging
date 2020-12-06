@@ -15,6 +15,10 @@ import tiles.BrickGift.GiftColors;
 
 class PlayState extends FlxState
 {
+	inline static var WINDOW_WIDTH = 480;
+	inline static var GAME_WIDTH = 320;
+	inline static var WING_WIDTH = (WINDOW_WIDTH - GAME_WIDTH) / 2;
+	
 	public static final CELL_SIZE:Int = 32;
 	public static final CELL_SCALE:Float = CELL_SIZE / 32;
 
@@ -57,7 +61,14 @@ class PlayState extends FlxState
 		add(this.pickups);
 
 		FlxG.camera.follow(player, TOPDOWN, 1);
-		FlxG.camera.setScrollBoundsRect(0, 0, 320, 99999);
+		FlxG.camera.deadzone.x = 0;
+		FlxG.camera.deadzone.y -= FlxG.height / 4; // show the player near the top
+		FlxG.camera.deadzone.height = 100;// approx the jump height
+		FlxG.camera.deadzone.width = FlxG.width;
+		FlxG.camera.minScrollX = -WING_WIDTH;
+		FlxG.camera.maxScrollX = FlxG.width - WING_WIDTH;
+		FlxG.camera.minScrollY = null;
+		FlxG.camera.maxScrollY = null;
 
 		this.HUD = new HUD();
 		this.score = 0;
@@ -80,7 +91,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(enemies, tiles);
 		FlxG.collide(enemies, bounds);
-		FlxG.overlap(player, pickups, (_, pickup) -> pickup.puckup());
+		FlxG.overlap(player, pickups,(_, pickup:Pickup) -> pickup.pickup());
 		FlxG.collide(pickups, tiles);
 
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
