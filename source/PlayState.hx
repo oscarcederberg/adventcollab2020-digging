@@ -18,7 +18,7 @@ class PlayState extends FlxState
 	inline static var WINDOW_WIDTH = 480;
 	inline static var GAME_WIDTH = 320;
 	inline static var WING_WIDTH = (WINDOW_WIDTH - GAME_WIDTH) / 2;
-	
+
 	public static final CELL_SIZE:Int = 32;
 	public static final CELL_SCALE:Float = CELL_SIZE / 32;
 
@@ -48,7 +48,7 @@ class PlayState extends FlxState
 		add(background);
 
 		this.tiles = new FlxTypedGroup<Tile>();
-		this.map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_test__json);
+		this.map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_1__json);
 		this.bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
 		this.tilemap = map.loadTilemap(AssetPaths.tiles__png, "tiles");
 		placeTiles();
@@ -63,7 +63,7 @@ class PlayState extends FlxState
 		FlxG.camera.follow(player, TOPDOWN, 1);
 		FlxG.camera.deadzone.x = 0;
 		FlxG.camera.deadzone.y -= FlxG.height / 4; // show the player near the top
-		FlxG.camera.deadzone.height = 100;// approx the jump height
+		FlxG.camera.deadzone.height = 100; // approx the jump height
 		FlxG.camera.deadzone.width = FlxG.width;
 		FlxG.camera.minScrollX = -WING_WIDTH;
 		FlxG.camera.maxScrollX = FlxG.width - WING_WIDTH;
@@ -91,7 +91,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(enemies, tiles);
 		FlxG.collide(enemies, bounds);
-		FlxG.overlap(player, pickups,(_, pickup:Pickup) -> pickup.pickup());
+		FlxG.overlap(player, pickups, (_, pickup:Pickup) -> pickup.pickup());
 		FlxG.collide(pickups, tiles);
 
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
@@ -136,6 +136,8 @@ class PlayState extends FlxState
 						tiles.add(new BedrockStart(x * 32, y * 32));
 					case 10:
 						tiles.add(new Bedrock(x * 32, y * 32));
+					case 11:
+						tiles.add(new BlockGiftMedium(x * 32, y * 32));
 				}
 			}
 		}
@@ -154,6 +156,8 @@ class PlayState extends FlxState
 				enemies.add(new Enemy(real_x, real_y));
 			case "gift":
 				pickups.add(new Gift(real_x, real_y, GiftColors.Random));
+			case "gift_medium":
+				pickups.add(new GiftMedium(real_x, real_y));
 			case "gift_big":
 				pickups.add(new GiftBig(real_x, real_y));
 		}

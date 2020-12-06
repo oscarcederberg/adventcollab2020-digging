@@ -13,6 +13,7 @@ class Gift extends Pickup
 	public function new(x:Float = 0, y:Float = 0, giftColor:GiftColors)
 	{
 		super(x, y);
+		this.score = 100;
 
 		if (giftColor == GiftColors.Random)
 		{
@@ -28,12 +29,6 @@ class Gift extends Pickup
 		{
 			this.giftColor = giftColor;
 		}
-
-		/*
-			setSize(20, 18);
-			centerOffsets(true);
-			// offset.set(offset.x, -9);
-		 */
 
 		switch (giftColor)
 		{

@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
@@ -10,7 +11,7 @@ using flixel.util.FlxSpriteUtil;
 
 class Enemy extends FlxSprite
 {
-	public static final SCORE:Int = 1600;
+	public static final SCORE:Int = 300;
 
 	static final MOVE_SPEED:Float = PlayState.CELL_SIZE * 2;
 	static final JUMP_SPEED:Float = PlayState.CELL_SIZE * 10;
@@ -18,6 +19,8 @@ class Enemy extends FlxSprite
 
 	public var totalHits:Int;
 	public var currentHits:Int;
+
+	var sfx_hit_2:FlxSound;
 
 	var parent:PlayState;
 
@@ -43,6 +46,8 @@ class Enemy extends FlxSprite
 		animation.add("idle", [0]);
 		animation.add("walk", [1, 0], 4, true);
 		animation.play("walk");
+
+		sfx_hit_2 = FlxG.sound.load(AssetPaths.sfx_hit_2__wav);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -77,6 +82,8 @@ class Enemy extends FlxSprite
 		if (!this.isFlickering())
 		{
 			this.currentHits -= amount;
+			sfx_hit_2.play();
+
 			if (this.currentHits <= 0)
 			{
 				parent.updateScore(SCORE);

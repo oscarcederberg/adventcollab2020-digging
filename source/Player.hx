@@ -25,7 +25,7 @@ class Player extends FlxSprite
 	var parent:PlayState;
 
 	var sfx_step:FlxSound;
-	var sfx_hit:FlxSound;
+	var sfx_hit_1:FlxSound;
 	var sfx_damage:FlxSound;
 
 	public function new(x:Float = 0, y:Float = 0)
@@ -59,7 +59,7 @@ class Player extends FlxSprite
 		animation.play("idle");
 
 		sfx_step = FlxG.sound.load(AssetPaths.sfx_step__wav);
-		sfx_hit = FlxG.sound.load(AssetPaths.sfx_hit__wav);
+		sfx_hit_1 = FlxG.sound.load(AssetPaths.sfx_hit_1__wav);
 		sfx_damage = FlxG.sound.load(AssetPaths.sfx_damage__wav);
 	}
 
@@ -158,13 +158,12 @@ class Player extends FlxSprite
 				{
 					digging = true;
 					new FlxTimer().start(1 / pickaxe.speed, function(timer) digging = false);
-					sfx_hit.play();
+					sfx_hit_1.play();
 				}
 				else if (FlxG.overlap(pickaxe, parent.enemies, function(object1, object2) cast(object2, Enemy).hit(cast(object1, Pickaxe).strength)))
 				{
 					digging = true;
 					new FlxTimer().start(1 / pickaxe.speed, function(timer) digging = false);
-					sfx_hit.play();
 				}
 			}
 			else
