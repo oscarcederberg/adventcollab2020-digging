@@ -33,17 +33,17 @@ class Gift extends Pickup
 		switch (giftColor)
 		{
 			case Green:
-				loadGraphic(AssetPaths.spr_gift_green__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+				loadGraphic("assets/images/spr_gift_green.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 			case Purple:
-				loadGraphic(AssetPaths.spr_gift_purple__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+				loadGraphic("assets/images/spr_gift_purple.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 			case Black:
-				loadGraphic(AssetPaths.spr_gift_black__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+				loadGraphic("assets/images/spr_gift_black.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 			case Red:
-				loadGraphic(AssetPaths.spr_gift_red__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+				loadGraphic("assets/images/spr_gift_red.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 			case Blue:
-				loadGraphic(AssetPaths.spr_gift_blue__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+				loadGraphic("assets/images/spr_gift_blue.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 			default:
-				loadGraphic(AssetPaths.spr_gift_green__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+				loadGraphic("assets/images/spr_gift_green.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		}
 	}
 }

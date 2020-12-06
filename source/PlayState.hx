@@ -44,13 +44,13 @@ class PlayState extends FlxState
 		this.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
 
 		var background:FlxSprite = new FlxSprite(0, 0);
-		background.loadGraphic(AssetPaths.spr_background__png, true, 320, 512);
+		background.loadGraphic("assets/images/spr_background.png", true, 320, 512);
 		add(background);
 
 		this.tiles = new FlxTypedGroup<Tile>();
-		this.map = new FlxOgmo3Loader(AssetPaths.advent2020__ogmo, AssetPaths.level_1__json);
+		this.map = new FlxOgmo3Loader("assets/data/advent2020.ogmo", "assets/data/level_1.json");
 		this.bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
-		this.tilemap = map.loadTilemap(AssetPaths.tiles__png, "tiles");
+		this.tilemap = map.loadTilemap("assets/images/OGMO/tiles.png", "tiles");
 		placeTiles();
 		add(this.tiles);
 

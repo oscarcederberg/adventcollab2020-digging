@@ -13,6 +13,6 @@ class Snow extends Tile
 		this.totalHits = 1;
 		this.currentHits = this.totalHits;
 
-		loadGraphic(AssetPaths.spr_snow__png, false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_snow.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 }

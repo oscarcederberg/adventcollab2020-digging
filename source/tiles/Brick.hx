@@ -13,7 +13,7 @@ class Brick extends Tile
 		this.totalHits = 2;
 		this.currentHits = this.totalHits;
 
-		loadGraphic(AssetPaths.spr_brick__png, true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic("assets/images/spr_brick.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		animation.add("hit_0", [0]);
 		animation.add("hit_1", [1]);
 		animation.play("hit_0");

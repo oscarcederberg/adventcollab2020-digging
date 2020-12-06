@@ -3,7 +3,7 @@ package;
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
-class Main extends Sprite
+class DiggingMain extends Sprite
 {
 	public function new()
 	{
