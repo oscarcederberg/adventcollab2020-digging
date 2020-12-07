@@ -19,10 +19,13 @@ class MenuState extends FlxState
 		background.loadGraphic("assets/images/spr_title.png", false, 480, 270);
 		add(background);
 
-		playButton = new FlxButton(0, 0, "Play", clickPlay);
-		playButton.y = 10 * 540 / 32;
+		playButton = new FlxButton(0, 10 * 540 / 32, null, clickPlay);
+		playButton.loadGraphic("assets/images/spr_button_play.png", true, 80, 26);
 		playButton.screenCenter(X);
 		add(playButton);
+
+		FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
+		FlxG.sound.music.loopTime = 3692;
 
 		keys = tiles.Konami.KEYS;
 		step = 0;
