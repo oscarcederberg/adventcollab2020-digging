@@ -19,7 +19,7 @@ class EndState extends FlxState
 		var background:FlxBackdrop = new FlxBackdrop("assets/images/spr_end.png", 2, 1);
 		background.velocity.set(16, 8);
 
-		var font = new ui.DigFont.DigNokiaFont16();
+		var font = new ui.Font.NokiaFont16();
 		// var gameOverText = new FlxText(0, 0, 0, 32);
 		var gameOverText = new FlxBitmapText(font);
 		gameOverText.scale.set(2, 2);

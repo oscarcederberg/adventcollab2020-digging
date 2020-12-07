@@ -27,7 +27,7 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		wings.scrollFactor.set(0, 0);
 		add(wings);
 
-		var font = new ui.DigFont.DigNokiaFont16();
+		var font = new ui.Font.NokiaFont16();
 		// scoreCounter = new FlxText(8, 8, 0, "Score: 0", 16);
 		scoreCounter = new FlxBitmapText(font);
 		scoreCounter.text = "Score: 0";

@@ -1,6 +1,5 @@
 package ui;
 
-#if STAND_ALONE
 import flixel.FlxG;
 import flixel.math.FlxRect;
 import flixel.math.FlxPoint;
@@ -8,7 +7,7 @@ import flixel.graphics.frames.FlxBitmapFont;
 
 @:forward
 // copied from advent2020, so it runs standalone
-abstract DigFont(FlxBitmapFont) to FlxBitmapFont
+abstract Font(FlxBitmapFont) to FlxBitmapFont
 {
     function new (chars:String, widths:Array<Int>, path:String, lineHeight = 9, spaceWidth = 4)
     {
@@ -30,9 +29,9 @@ abstract DigFont(FlxBitmapFont) to FlxBitmapFont
 }
 
 @:forward
-abstract DigNokiaFont(FlxBitmapFont) to FlxBitmapFont
+abstract NokiaFont(FlxBitmapFont) to FlxBitmapFont
 {
-    static var instance:DigNokiaFont = null;
+    static var instance:NokiaFont = null;
     public function new ()
     {
         if (instance == null)
@@ -47,16 +46,16 @@ abstract DigNokiaFont(FlxBitmapFont) to FlxBitmapFont
             ];
             
             @:privateAccess
-            instance = cast new DigFont(chars, widths, "assets/images/ui/NokiaFont.png", 9, 4);
+            instance = cast new Font(chars, widths, "assets/images/ui/NokiaFont.png", 9, 4);
         }
         this = instance;
     }
 }
 
 @:forward
-abstract DigNokiaFont16(FlxBitmapFont) to FlxBitmapFont
+abstract NokiaFont16(FlxBitmapFont) to FlxBitmapFont
 {
-    static var instance:DigNokiaFont16 = null;
+    static var instance:NokiaFont16 = null;
     public function new ()
     {
         if (instance == null)
@@ -71,16 +70,16 @@ abstract DigNokiaFont16(FlxBitmapFont) to FlxBitmapFont
             ];
             
             @:privateAccess
-            instance = cast new DigFont(chars, widths.map((n)->n*2), "assets/images/ui/NokiaFont16.png",  18, 8);
+            instance = cast new Font(chars, widths.map((n)->n*2), "assets/images/ui/NokiaFont16.png",  18, 8);
         }
         this = instance;
     }
 }
 
 @:forward
-abstract DigXmasFont(FlxBitmapFont) to FlxBitmapFont
+abstract XmasFont(FlxBitmapFont) to FlxBitmapFont
 {
-    static var instance:DigXmasFont = null;
+    static var instance:XmasFont = null;
     public function new ()
     {
         if (instance == null)
@@ -107,16 +106,16 @@ abstract DigXmasFont(FlxBitmapFont) to FlxBitmapFont
             // trace("Xmas widths:" + widths);
             
             @:privateAccess
-            instance = cast new DigFont(chars, widths, "assets/images/ui/XmasFont24.png", bmd.height - 1, 4);
+            instance = cast new Font(chars, widths, "assets/images/ui/XmasFont24.png", bmd.height - 1, 4);
         }
         this = instance;
     }
 }
 
 @:forward
-abstract DigGravFont(FlxBitmapFont) to FlxBitmapFont
+abstract GravFont(FlxBitmapFont) to FlxBitmapFont
 {
-    static var instance:DigGravFont = null;
+    static var instance:GravFont = null;
     public function new ()
     {
         if (instance == null)
@@ -143,15 +142,8 @@ abstract DigGravFont(FlxBitmapFont) to FlxBitmapFont
             // trace("Xmas widths:" + widths);
             
             @:privateAccess
-            instance = cast new DigFont(chars, widths, "assets/images/ui/GravFont5.png", bmd.height - 1, 4);
+            instance = cast new Font(chars, widths, "assets/images/ui/GravFont5.png", bmd.height - 1, 4);
         }
         this = instance;
     }
 }
-#else
-typedef DigFont        = ui.Font;
-typedef DigNokiaFont   = ui.Font.NokiaFont;
-typedef DigNokiaFont16 = ui.Font.NokiaFont16;
-typedef DigXmasFont    = ui.Font.XmasFont;
-typedef DigGravFont    = ui.Font.GravFont;
-#end
