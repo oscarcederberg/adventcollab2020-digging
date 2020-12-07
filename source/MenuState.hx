@@ -45,6 +45,10 @@ class MenuState extends FlxState
 			else
 			{
 				step = 0;
+				if (FlxG.keys.anyJustPressed([J, Z]))
+				{
+					clickPlay();
+				}
 			}
 		}
 

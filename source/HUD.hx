@@ -20,7 +20,10 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		super();
 
 		var wings:FlxSprite = new FlxSprite(0, 0);
-		wings.loadGraphic("assets/images/spr_wings.png", true, 480, 270);
+		if (!FlxG.onMobile)
+			wings.loadGraphic("assets/images/spr_wings_pc.png", true, 480, 270);
+		else
+			wings.loadGraphic("assets/images/spr_wings_mobile.png", true, 480, 270);
 		wings.scrollFactor.set(0, 0);
 		add(wings);
 

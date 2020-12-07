@@ -83,6 +83,16 @@ class EndState extends FlxState
 		add(playButton);
 	}
 
+	override public function update(elapsed:Float)
+	{
+		if (FlxG.keys.anyJustPressed([J, Z]))
+		{
+			clickRestart();
+		}
+
+		super.update(elapsed);
+	}
+
 	function clickRestart()
 	{
 		FlxG.switchState(new PlayState());
