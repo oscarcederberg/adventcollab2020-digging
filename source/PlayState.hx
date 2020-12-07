@@ -193,6 +193,11 @@ class PlayState extends FlxState
 
 	public function endGame(timer:FlxTimer)
 	{
+		#if ADVENT
+		data.NGio.postPlayerHiscore("digging", score);
+		if (score > 20000)
+			data.NGio.unlockMedal(61364);// hard coded for now, meh
+		#end
 		FlxG.sound.music.fadeOut(0.4);
 		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
 		new FlxTimer().start(0.4, (_) ->
