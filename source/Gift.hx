@@ -30,20 +30,10 @@ class Gift extends Pickup
 			this.giftColor = giftColor;
 		}
 
-		switch (giftColor)
-		{
-			case Green:
-				loadGraphic("assets/images/spr_gift_green.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Purple:
-				loadGraphic("assets/images/spr_gift_purple.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Black:
-				loadGraphic("assets/images/spr_gift_black.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Red:
-				loadGraphic("assets/images/spr_gift_red.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Blue:
-				loadGraphic("assets/images/spr_gift_blue.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			default:
-				loadGraphic("assets/images/spr_gift_green.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-		}
+		var offset = giftColor.getIndex();
+
+		loadGraphic("assets/images/spr_gift.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		animation.add("idle", [offset]);
+		animation.play("idle");
 	}
 }

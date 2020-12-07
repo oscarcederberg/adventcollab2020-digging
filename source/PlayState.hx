@@ -34,6 +34,7 @@ class PlayState extends FlxState
 
 	public var player:Player;
 	public var HUD:HUD;
+	public var fastMode:Bool;
 	public var tiles:FlxTypedGroup<Tile>;
 	public var enemies:FlxTypedGroup<Enemy>;
 	public var pickups:FlxTypedGroup<Pickup>;
@@ -81,11 +82,27 @@ class PlayState extends FlxState
 		this.time.start(300, endGame, 1);
 		add(HUD);
 
+		this.fastMode = false;
+		FlxG.sound.playMusic("assets/music/mus_music_normal.mp3", 0.5, true);
+		FlxG.sound.music.loopTime = 22160;
+
 		super.create();
 	}
 
 	override public function update(elapsed:Float)
 	{
+		if (!fastMode)
+		{
+			if (time.timeLeft <= 60)
+			{
+				fastMode = true;
+				HUD.updateFlicker();
+				FlxG.sound.music.fadeOut(0.2, 0);
+				FlxG.sound.play("assets/sounds/sfx_hurry_up.wav");
+				new FlxTimer().start(1.5, switchTrack, 1);
+			}
+		}
+
 		enemies.forEach(function(enemy:Enemy) enemy.active = enemy.isOnScreen());
 		pickups.forEach(function(pickup:Pickup) pickup.active = pickup.isOnScreen());
 
@@ -101,7 +118,7 @@ class PlayState extends FlxState
 		if (FlxG.keys.anyPressed([R]))
 			FlxG.switchState(new PlayState());
 		if (FlxG.keys.anyPressed([Q]))
-			FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+			endGame(null);
 
 		super.update(elapsed);
 	}
@@ -163,6 +180,12 @@ class PlayState extends FlxState
 		}
 	}
 
+	public function switchTrack(timer:FlxTimer)
+	{
+		FlxG.sound.playMusic("assets/music/mus_music_fast.mp3", 0.5, true);
+		FlxG.sound.music.loopTime = 18005;
+	}
+
 	public function updateScore(score:Int)
 	{
 		this.score += score;
@@ -170,6 +193,7 @@ class PlayState extends FlxState
 
 	public function endGame(timer:FlxTimer)
 	{
+		FlxG.sound.music.stop();
 		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
 	}
 }

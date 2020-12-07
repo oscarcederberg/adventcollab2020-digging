@@ -5,12 +5,12 @@ import haxe.macro.Expr.Case;
 
 enum GiftColors
 {
-	Random;
 	Green;
 	Purple;
 	Black;
 	Red;
 	Blue;
+	Random;
 }
 
 class BrickGift extends Tile
@@ -32,25 +32,13 @@ class BrickGift extends Tile
 			GiftColors.Blue
 		]);
 
-		switch (giftColor)
-		{
-			case Green:
-				loadGraphic("assets/images/spr_brick_gift_green.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Purple:
-				loadGraphic("assets/images/spr_brick_gift_purple.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Black:
-				loadGraphic("assets/images/spr_brick_gift_black.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Red:
-				loadGraphic("assets/images/spr_brick_gift_red.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			case Blue:
-				loadGraphic("assets/images/spr_brick_gift_blue.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-			default:
-				loadGraphic("assets/images/spr_brick_gift_green.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
-		}
+		var offset = giftColor.getIndex();
 
-		animation.add("hit_0", [0]);
-		animation.add("hit_1", [1]);
-		animation.add("hit_2", [2]);
+		loadGraphic("assets/images/spr_brick_gift.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+
+		animation.add("hit_0", [offset * 3 + 0]);
+		animation.add("hit_1", [offset * 3 + 1]);
+		animation.add("hit_2", [offset * 3 + 2]);
 		animation.play("hit_0");
 	}
 
