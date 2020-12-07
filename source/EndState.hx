@@ -75,14 +75,6 @@ class EndState extends FlxState
 		playButton.screenCenter(X);
 		playButton.scrollFactor.set(0, 0);
 
-		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
-		var timer = new FlxTimer();
-		timer.start(4, (_) ->
-		{
-			FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
-			FlxG.sound.music.loopTime = 3692;
-		}, 1);
-
 		add(background);
 		add(gameOverText);
 		add(scoreText);
@@ -91,6 +83,19 @@ class EndState extends FlxState
 		add(enemiesText);
 		add(depthText);
 		add(playButton);
+	}
+
+	override public function create()
+	{
+		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
+		var timer = new FlxTimer();
+		timer.start(4, (_) ->
+		{
+			FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
+			FlxG.sound.music.loopTime = 3692;
+		}, 1);
+
+		super.create();
 	}
 
 	override public function update(elapsed:Float)
