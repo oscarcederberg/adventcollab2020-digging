@@ -27,7 +27,7 @@ class Bedrock extends Tile
 class Konami extends FlxSprite
 {
 	public static var KEYS:Array<Array<FlxKey>> = [
-		[UP, W], [UP, W], [DOWN, S], [DOWN, S], [LEFT, A], [RIGHT, D], [LEFT, A], [RIGHT, D], [J, Z], [K, X]];
+		[UP, W], [UP, W], [DOWN, S], [DOWN, S], [LEFT, A], [RIGHT, D], [LEFT, A], [RIGHT, D], [K, X], [J, Z]];
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
