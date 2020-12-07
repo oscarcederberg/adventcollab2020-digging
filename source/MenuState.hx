@@ -3,11 +3,15 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.input.keyboard.FlxKey;
 import flixel.ui.FlxButton;
+import tiles.Bedrock;
 
 class MenuState extends FlxState
 {
 	var playButton:FlxButton;
+	var keys:Array<Array<FlxKey>>;
+	var step:Int;
 
 	override public function create()
 	{
@@ -20,7 +24,27 @@ class MenuState extends FlxState
 		playButton.screenCenter(X);
 		add(playButton);
 
+		keys = tiles.Konami.KEYS;
+		step = 0;
+
 		super.create();
+	}
+
+	override public function update(elapsed:Float)
+	{
+		if (FlxG.keys.anyJustPressed([ANY]))
+		{
+			if (tiles.Konami.handleKeys(step))
+			{
+				step++;
+				if (step == 10)
+				{
+					add(new tiles.Konami(352, 96));
+				}
+			}
+		}
+
+		super.update(elapsed);
 	}
 
 	function clickPlay()

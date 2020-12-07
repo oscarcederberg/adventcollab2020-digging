@@ -117,7 +117,7 @@ class PlayState extends FlxState
 
 		if (FlxG.keys.anyPressed([R]))
 			FlxG.switchState(new PlayState());
-		if (FlxG.keys.anyPressed([Q]))
+		if (FlxG.keys.anyJustPressed([Q]))
 			endGame(null);
 
 		super.update(elapsed);
@@ -193,7 +193,12 @@ class PlayState extends FlxState
 
 	public function endGame(timer:FlxTimer)
 	{
-		FlxG.sound.music.stop();
-		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+		FlxG.sound.music.fadeOut(0.4);
+		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
+		new FlxTimer().start(0.4, (_) ->
+		{
+			FlxG.sound.music.stop();
+			FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+		}, 1);
 	}
 }

@@ -2,6 +2,8 @@ package tiles;
 
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
+import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxCollision;
 
 class Bedrock extends Tile
@@ -19,5 +21,41 @@ class Bedrock extends Tile
 	override public function hit(amount:Int):Void
 	{
 		// donothing
+	}
+}
+
+class Konami extends FlxSprite
+{
+	public static var KEYS:Array<Array<FlxKey>> = [
+		[UP, W], [UP, W], [DOWN, S], [DOWN, S], [LEFT, A], [RIGHT, D], [LEFT, A], [RIGHT, D], [J, Z], [K, X]];
+
+	public function new(x:Float = 0, y:Float = 0)
+	{
+		super(x, y);
+
+		var today = Date.now();
+		if (today.getMonth() == 11 && today.getDate() == 8)
+		{
+			loadGraphic("assets/images/spr_konami_bd.png", true, 96, 128);
+		}
+		else
+		{
+			loadGraphic("assets/images/spr_konami.png", true, 96, 128);
+		}
+
+		animation.add("konami", [0, 1, 2, 3], 10, true);
+		animation.play("konami");
+
+		FlxG.sound.play("assets/sounds/sfx_konami.wav");
+	}
+
+	static public function handleKeys(step:Int):Bool
+	{
+		if (step < 10)
+		{
+			return FlxG.keys.anyJustPressed(KEYS[step]);
+		}
+		else
+			return false;
 	}
 }
