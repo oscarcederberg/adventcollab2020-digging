@@ -130,6 +130,56 @@ class NGio
 		}
 	}
 	
+	static public function requestHiscores(boardId:Int, limit = 10, skip = 0, social = false, ?callback:(Array<Score>)->Void)
+	{
+		if (!isLoggedIn)
+			throw "Must log in to access player scores";
+		
+		if (NG.core.scoreBoards == null)
+			throw "Cannot access scoreboards until ngScoresLoaded is dispatched";
+		
+		if (!NG.core.scoreBoards.exists(boardId))
+			throw "Invalid boardId:" + boardId;
+		
+		var board = NG.core.scoreBoards.get(boardId);
+		if (callback != null)
+			board.onUpdate.addOnce(()->callback(board.scores));
+		board.requestScores(limit, skip, ALL, social);
+	}
+	
+	static public function requestPlayerHiscore(boardId:Int, callback:(Score)->Void)
+	{
+		if (!isLoggedIn)
+			throw "Must log in to access player scores";
+		
+		if (NG.core.scoreBoards == null)
+			throw "Cannot access scoreboards until ngScoresLoaded is dispatched";
+		
+		if (!NG.core.scoreBoards.exists(boardId))
+			throw "Invalid boardId:" + boardId;
+		
+		NG.core.scoreBoards.get(boardId).requestScores(1, 0, ALL, false, null, userName);
+	}
+	
+	static public function requestPlayerHiscoreValue(boardId, callback:(Int)->Void)
+	{
+		requestPlayerHiscore(boardId, (score)->callback(score.value));
+	}
+	
+	static public function postPlayerHiscore(boardId:Int, value:Int, ?tag)
+	{
+		if (!isLoggedIn)
+			throw "Must log in to access player scores";
+		
+		if (NG.core.scoreBoards == null)
+			throw "Cannot access scoreboards until ngScoresLoaded is dispatched";
+		
+		if (!NG.core.scoreBoards.exists(boardId))
+			throw "Invalid boardId:" + boardId;
+		
+		NG.core.scoreBoards.get(boardId).postScore(value, tag);
+	}
+	
 	// --- MEDALS
 	static function onMedalsRequested():Void
 	{
