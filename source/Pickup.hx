@@ -30,9 +30,12 @@ class Pickup extends FlxSprite
 
 	public function pickup()
 	{
-		sfx_pickup.play();
-		parent.updateScore(score);
-		parent.giftsCollected++;
-		kill();
+		if (FlxG.pixelPerfectOverlap(this, parent.player))
+		{
+			sfx_pickup.play();
+			parent.updateScore(score);
+			parent.giftsCollected++;
+			kill();
+		}
 	}
 }
