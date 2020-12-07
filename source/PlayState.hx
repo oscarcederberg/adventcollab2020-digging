@@ -99,7 +99,7 @@ class PlayState extends FlxState
 				HUD.updateFlicker();
 				FlxG.sound.music.fadeOut(0.2, 0);
 				FlxG.sound.play("assets/sounds/sfx_hurry_up.wav");
-				new FlxTimer().start(1.5, switchTrack, 1);
+				new FlxTimer().start(3.33, switchTrack, 1);
 			}
 		}
 
@@ -193,12 +193,7 @@ class PlayState extends FlxState
 
 	public function endGame(timer:FlxTimer)
 	{
-		FlxG.sound.music.fadeOut(0.4);
-		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
-		new FlxTimer().start(0.4, (_) ->
-		{
-			FlxG.sound.music.stop();
-			FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
-		}, 1);
+		FlxG.sound.music.stop();
+		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
 	}
 }

@@ -9,6 +9,7 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.text.FlxBitmapText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 class EndState extends FlxState
 {
@@ -69,9 +70,18 @@ class EndState extends FlxState
 		depthText.screenCenter(X);
 		depthText.scrollFactor.set(0, 0);
 
-		var playButton = new FlxButton(0, 13 * 540 / 32, "Restart", clickRestart);
+		var playButton = new FlxButton(0, 13 * 540 / 32, null, clickRestart);
+		playButton.loadGraphic("assets/images/spr_button_restart.png", true, 80, 26);
 		playButton.screenCenter(X);
 		playButton.scrollFactor.set(0, 0);
+
+		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
+		var timer = new FlxTimer();
+		timer.start(4, (_) ->
+		{
+			FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
+			FlxG.sound.music.loopTime = 3692;
+		}, 1);
 
 		add(background);
 		add(gameOverText);
