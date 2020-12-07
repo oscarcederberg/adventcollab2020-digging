@@ -195,6 +195,12 @@ class PlayState extends FlxState
 
 	public function endGame(timer:FlxTimer)
 	{
+		#if ADVENT
+		data.NGio.postPlayerHiscore("digging", score);
+		if (score > 20000)
+			data.NGio.unlockMedal(61364);// hard coded for now, meh
+		#end
+
 		FlxG.sound.music.stop();
 		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
 	}

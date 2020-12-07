@@ -27,10 +27,9 @@
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
-	<define name="STAND_ALONE" />
-
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
+	<classpath name="standAloneSource" />
 	<assets path="assets" />
 	<assets path="standAloneAssets" rename="assets"/>
 
@@ -47,9 +46,26 @@
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->
 
+	<!-- enables NG.io -->
+	<!-- <haxelib name="newgrounds" /> -->
+
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
-	<!--Enable the Flixel core recording system-->
+	<define name="STAND_ALONE" />
+
+	<section if="newgrounds">
+		<!--Skips the part asking you to log in-->
+		<!-- <define name="NG_BYPASS_LOGIN" /> -->
+		
+		<!--Enables NGio logging-->
+		<define name="NG_LOG" />
+		
+		<!--Enables way more NGio logging-->
+		<!-- <define name="NG_VERBOSE" /> -->
+		
+		<!--Sets your api session to debug moce, medals collected in this mode are not actually collected -->
+		<!-- <define name="NG_DEBUG" /> -->
+	</section>
 	<!--<haxedef name="FLX_RECORD" />-->
 
 	<!--Disable the right and middle mouse buttons-->
