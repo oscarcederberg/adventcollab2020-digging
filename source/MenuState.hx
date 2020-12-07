@@ -42,6 +42,10 @@ class MenuState extends FlxState
 					add(new tiles.Konami(352, 96));
 				}
 			}
+			else
+			{
+				step = 0;
+			}
 		}
 
 		super.update(elapsed);
