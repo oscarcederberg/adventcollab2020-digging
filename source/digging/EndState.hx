@@ -1,4 +1,4 @@
-package;
+package digging;
 
 import blocks.*;
 import flixel.FlxG;
@@ -7,14 +7,21 @@ import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.text.FlxBitmapText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
 class EndState extends FlxState
 {
+	var rollupComplete = false;
+	var score = 0;
+	var scoreText:FlxBitmapText;
+
 	public function new(score:Int, giftsCollected:Int, blocksDestroyed:Int, enemiesKilled:Int, maxDepth:Int)
 	{
+		this.score = score;
 		super();
 
 		var background:FlxBackdrop = new FlxBackdrop("assets/images/spr_end.png", 2, 1);
@@ -30,8 +37,8 @@ class EndState extends FlxState
 		gameOverText.screenCenter(X);
 		gameOverText.scrollFactor.set(0, 0);
 
-		// var scoreText = new FlxText(0, 0, 0, 16);
-		var scoreText = new FlxBitmapText(font);
+		//scoreText = new FlxText(0, 0, 0, 16);
+		scoreText = new FlxBitmapText(font);
 		scoreText.y = 7 * 540 / 32;
 		scoreText.text = "Final Score: " + score;
 		scoreText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
@@ -70,6 +77,38 @@ class EndState extends FlxState
 		depthText.screenCenter(X);
 		depthText.scrollFactor.set(0, 0);
 
+		add(background);
+		add(gameOverText);
+		add(scoreText);
+		add(giftsText);
+		add(blocksText);
+		add(enemiesText);
+		add(depthText);
+	}
+
+	override public function create()
+	{
+		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
+		var timer = new FlxTimer();
+		timer.start(4, (_) ->
+		{
+			FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
+			FlxG.sound.music.loopTime = 3692;
+		}, 1);
+
+		scoreText.text = "Final Score: 0";
+		FlxTween.num(0, score, 1.0,
+			{ ease:FlxEase.circIn, onComplete:onRollupComplete },
+			(num)->{ scoreText.text = "Final Score: " + (Math.round(num / 5) * 5); }
+		);
+
+		super.create();
+	}
+
+	function onRollupComplete(tween:FlxTween)
+	{
+		rollupComplete = true;
+
 		var playButton = new FlxButton(0, 13 * 540 / 32, null, clickRestart);
 		playButton.loadGraphic("assets/images/spr_button_restart.png", true, 80, 26);
 		playButton.screenCenter(X);
@@ -84,33 +123,13 @@ class EndState extends FlxState
 		exitButton.x -= exitButton.width;
 		#end
 
-		add(background);
-		add(gameOverText);
-		add(scoreText);
-		add(giftsText);
-		add(blocksText);
-		add(enemiesText);
-		add(depthText);
 		add(playButton);
 		#if ADVENT add(exitButton); #end
 	}
 
-	override public function create()
-	{
-		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
-		var timer = new FlxTimer();
-		timer.start(4, (_) ->
-		{
-			FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
-			FlxG.sound.music.loopTime = 3692;
-		}, 1);
-
-		super.create();
-	}
-
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.keys.anyJustPressed([J, Z]))
+		if (FlxG.keys.anyJustPressed([J, Z]) && rollupComplete)
 		{
 			clickRestart();
 		}

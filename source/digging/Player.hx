@@ -1,4 +1,4 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -6,7 +6,7 @@ import flixel.FlxSprite;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import tiles.*;
+import digging.tiles.*;
 
 using flixel.util.FlxSpriteUtil;
 

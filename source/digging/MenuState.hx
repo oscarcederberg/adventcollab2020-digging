@@ -1,11 +1,11 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.input.keyboard.FlxKey;
 import flixel.ui.FlxButton;
-import tiles.Bedrock;
+import digging.tiles.Bedrock;
 
 class MenuState extends FlxState
 {
@@ -27,7 +27,7 @@ class MenuState extends FlxState
 		FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
 		FlxG.sound.music.loopTime = 3692;
 
-		keys = tiles.Konami.KEYS;
+		keys = Konami.KEYS;
 		step = 0;
 
 		super.create();
@@ -37,12 +37,12 @@ class MenuState extends FlxState
 	{
 		if (FlxG.keys.anyJustPressed([ANY]))
 		{
-			if (tiles.Konami.handleKeys(step))
+			if (Konami.handleKeys(step))
 			{
 				step++;
 				if (step == 10)
 				{
-					add(new tiles.Konami(352, 96));
+					add(new Konami(352, 96));
 				}
 			}
 			else

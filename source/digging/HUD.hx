@@ -1,4 +1,4 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

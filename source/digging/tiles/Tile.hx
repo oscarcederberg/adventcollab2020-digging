@@ -1,4 +1,4 @@
-package tiles;
+package digging.tiles;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
