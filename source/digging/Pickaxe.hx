@@ -1,9 +1,9 @@
-package;
+package digging;
 
 import flixel.FlxSprite;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
-import tiles.*;
+import digging.tiles.*;
 
 class Pickaxe extends FlxSprite
 {

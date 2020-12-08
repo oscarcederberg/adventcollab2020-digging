@@ -1,4 +1,4 @@
-package;
+package digging;
 
 import blocks.*;
 import flixel.FlxG;

@@ -1,10 +1,10 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
-import tiles.BrickGift.GiftColors;
+import digging.tiles.BrickGift.GiftColors;
 
 class GiftMedium extends Pickup
 {

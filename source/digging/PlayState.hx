@@ -1,4 +1,4 @@
-package;
+package digging;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -10,8 +10,8 @@ import flixel.tile.FlxTilemap;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import tiles.*;
-import tiles.BrickGift.GiftColors;
+import digging.tiles.*;
+import digging.tiles.BrickGift.GiftColors;
 
 class PlayState extends FlxState
 {
