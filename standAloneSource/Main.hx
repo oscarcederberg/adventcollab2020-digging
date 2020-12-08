@@ -1,5 +1,6 @@
 package;
 
+import digging.MenuState;
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
