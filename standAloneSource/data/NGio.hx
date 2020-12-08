@@ -169,7 +169,7 @@ class NGio
 	static public function postPlayerHiscore(boardId:Int, value:Int, ?tag)
 	{
 		if (!isLoggedIn)
-			throw "Must log in to access player scores";
+			return;
 		
 		if (NG.core.scoreBoards == null)
 			throw "Cannot access scoreboards until ngScoresLoaded is dispatched";
