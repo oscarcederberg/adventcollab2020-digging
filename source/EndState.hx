@@ -74,6 +74,15 @@ class EndState extends FlxState
 		playButton.loadGraphic("assets/images/spr_button_restart.png", true, 80, 26);
 		playButton.screenCenter(X);
 		playButton.scrollFactor.set(0, 0);
+		
+		#if ADVENT
+		playButton.x += playButton.width;
+		var exitButton = new FlxButton(0, 13 * 540 / 32, null, data.Game.exitArcade);
+		exitButton.loadGraphic("assets/images/spr_button_exit.png", true, 80, 26);
+		exitButton.screenCenter(X);
+		exitButton.scrollFactor.set(0, 0);
+		exitButton.x -= exitButton.width;
+		#end
 
 		add(background);
 		add(gameOverText);
@@ -83,6 +92,7 @@ class EndState extends FlxState
 		add(enemiesText);
 		add(depthText);
 		add(playButton);
+		#if ADVENT add(exitButton); #end
 	}
 
 	override public function create()

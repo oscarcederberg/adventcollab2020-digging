@@ -115,11 +115,13 @@ class PlayState extends FlxState
 		maxDepth = Std.int(Math.max(currentDepth, maxDepth));
 		HUD.updateHUD(score, Std.int(time.timeLeft));
 
-		#if debug
+		#if (debug || ADVENT)
 		if (FlxG.keys.anyPressed([R]))
 			FlxG.switchState(new PlayState());
 		if (FlxG.keys.anyJustPressed([Q]))
 			endGame(null);
+		if (FlxG.keys.anyJustPressed([ESCAPE]))
+			data.Game.exitArcade();
 		#end
 
 		super.update(elapsed);
