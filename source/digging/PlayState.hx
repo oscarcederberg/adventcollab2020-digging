@@ -120,6 +120,8 @@ class PlayState extends FlxState
 			FlxG.switchState(new PlayState());
 		if (FlxG.keys.anyJustPressed([Q]))
 			endGame(null);
+		#end
+		#if ADVENT
 		if (FlxG.keys.anyJustPressed([ESCAPE]))
 			data.Game.exitArcade();
 		#end
