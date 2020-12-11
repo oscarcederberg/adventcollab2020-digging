@@ -1,6 +1,9 @@
 package;
 
 import digging.MenuState;
+
+import ui.Controls;
+
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
@@ -10,5 +13,6 @@ class Main extends Sprite
 	{
 		super();
 		addChild(new FlxGame(480, 270, MenuState));
+		Controls.init();
 	}
 }

@@ -1,5 +1,7 @@
 package digging;
 
+import ui.Controls;
+
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -102,13 +104,13 @@ class Player extends FlxSprite
 
 	function movement():Void
 	{
-		var _up:Bool = FlxG.keys.anyPressed([UP, W,]);
-		var _down:Bool = FlxG.keys.anyPressed([DOWN, S]);
-		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
-		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
+		var _up:Bool = Controls.pressed.UP;
+		var _down:Bool = Controls.pressed.DOWN;
+		var _left:Bool = Controls.pressed.LEFT;
+		var _right:Bool = Controls.pressed.RIGHT;
 
-		var _action:Bool = FlxG.keys.anyPressed([Z, J]);
-		var _jump:Bool = FlxG.keys.anyJustPressed([X, K, SPACE]);
+		var _action:Bool = Controls.pressed.A;
+		var _jump:Bool = Controls.justPressed.B;
 
 		velocity.x = 0;
 		if (!digging)
