@@ -8,16 +8,15 @@ import flixel.system.FlxSound;
 class Pickup extends FlxSprite
 {
 	static final GRAVITY:Float = PlayState.CELL_SIZE * 30;
-
-	var score:Int;
-	var parent:PlayState;
+	
+	public var score(default, null):Int;
+	
 	var sfx_pickup:FlxSound;
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
 		this.score = 0;
-		this.parent = cast(FlxG.state);
 		this.acceleration.y = GRAVITY;
 
 		this.sfx_pickup = FlxG.sound.load("assets/sounds/sfx_pickup.wav");
@@ -30,12 +29,7 @@ class Pickup extends FlxSprite
 
 	public function pickup()
 	{
-		if (FlxG.pixelPerfectOverlap(this, parent.player))
-		{
-			sfx_pickup.play();
-			parent.updateScore(score);
-			parent.giftsCollected++;
-			kill();
-		}
+		sfx_pickup.play();
+		kill();
 	}
 }

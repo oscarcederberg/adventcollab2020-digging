@@ -1,5 +1,6 @@
 package digging;
 
+import digging.PlayState;
 import ui.Controls;
 
 import flixel.FlxG;
@@ -90,6 +91,7 @@ class Player extends FlxSprite
 		if (FlxG.overlap(this, parent.enemies) && !this.isFlickering())
 		{
 			parent.time.time -= 15;
+			new HitText(this, 15);
 			this.flicker(2);
 			sfx_damage.play();
 		}

@@ -2,14 +2,19 @@ package digging;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup;
+import flixel.text.FlxBitmapText;
 import flixel.tile.FlxTilemap;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+
 import digging.tiles.*;
 import digging.tiles.BrickGift.GiftColors;
 
@@ -39,6 +44,7 @@ class PlayState extends FlxState
 	public var enemies:FlxTypedGroup<Enemy>;
 	public var pickups:FlxTypedGroup<Pickup>;
 	public var bounds:FlxGroup;
+	public var infoTexts:FlxTypedGroup<InfoText>;
 
 	override public function create()
 	{
@@ -54,6 +60,9 @@ class PlayState extends FlxState
 		this.tilemap = map.loadTilemap("assets/images/OGMO/tiles.png", "tiles");
 		placeTiles();
 		add(this.tiles);
+
+		add(infoTexts = new FlxTypedGroup());
+		InfoText.pool = infoTexts;
 
 		this.enemies = new FlxTypedGroup<Enemy>();
 		this.pickups = new FlxTypedGroup<Pickup>();
@@ -108,7 +117,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(enemies, tiles);
 		FlxG.collide(enemies, bounds);
-		FlxG.overlap(player, pickups, (_, pickup:Pickup) -> pickup.pickup());
+		FlxG.overlap(player, pickups, (_, pickup:Pickup) -> pickupItem(pickup));
 		FlxG.collide(pickups, tiles);
 
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
@@ -127,6 +136,20 @@ class PlayState extends FlxState
 		#end
 
 		super.update(elapsed);
+	}
+
+	function pickupItem(pickup:Pickup)
+	{
+		if (FlxG.pixelPerfectOverlap(pickup, player))
+		{
+			giftsCollected++;
+			if (pickup.score > 0)
+			{
+				updateScore(pickup.score);
+				new ScoreText(pickup, pickup.score);
+			}
+			pickup.pickup();
+		}
 	}
 
 	// we want to tiles from the transform layer to actual tile entities instead of unbreakable tiles, this seems to be the only way?
@@ -207,5 +230,39 @@ class PlayState extends FlxState
 
 		FlxG.sound.music.stop();
 		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+	}
+}
+
+abstract HitText(InfoText) to InfoText
+{
+	inline public function new (source:FlxObject, seconds:Int)
+	{
+		this = new InfoText(source, '-${seconds}s', 0xFFff0000);
+	}
+}
+
+abstract ScoreText(InfoText) to InfoText
+{
+	inline public function new (source:FlxObject, score:Int)
+	{
+		this = new InfoText(source, score+"pts", 0xFFffffff, 0xFF486cb7);
+	}
+}
+
+abstract InfoText(FlxBitmapText) to FlxBitmapText
+{
+	static public var pool:FlxTypedGroup<FlxBitmapText>;
+	
+	public function new (source:FlxObject, text:String, color:FlxColor, border:FlxColor = 0xFF000000)
+	{
+		this = cast pool.recycle(FlxBitmapText, ()->new FlxBitmapText());
+		this.text = text;
+		this.x = source.x + (source.width - this.width) / 2;
+		this.y = source.y;
+		this.setBorderStyle(OUTLINE, border, 1);
+		this.color = color;
+
+		FlxTween.tween(this, { y:this.y - PlayState.CELL_SIZE }, 1,
+			{ ease:(t)->FlxEase.quadOut(Math.min(1, t * 1.5)), onComplete:(_)->this.kill() });
 	}
 }

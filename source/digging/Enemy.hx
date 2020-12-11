@@ -1,5 +1,6 @@
 package digging;
 
+import digging.PlayState;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -88,6 +89,7 @@ class Enemy extends FlxSprite
 			{
 				parent.updateScore(SCORE);
 				parent.enemiesKilled++;
+				new ScoreText(this, SCORE);
 				kill();
 			}
 			else
