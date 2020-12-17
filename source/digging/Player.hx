@@ -182,10 +182,10 @@ class Player extends FlxSprite
 	// animate.... and play some sound hehe
 	function animate()
 	{
-		var _up:Bool = FlxG.keys.anyPressed([UP, W,]);
-		var _down:Bool = FlxG.keys.anyPressed([DOWN, S]);
-		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
-		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
+		var _up:Bool = Controls.pressed.UP;
+		var _down:Bool = Controls.pressed.DOWN;
+		var _left:Bool = Controls.pressed.LEFT;
+		var _right:Bool = Controls.pressed.RIGHT;
 
 		if (_up && _down)
 			_up = _down = false;

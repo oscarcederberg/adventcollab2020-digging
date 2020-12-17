@@ -6,6 +6,8 @@ import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxCollision;
 
+import ui.Controls;
+
 class Bedrock extends Tile
 {
 	public function new(x:Float = 0, y:Float = 0)
@@ -26,8 +28,7 @@ class Bedrock extends Tile
 
 class Konami extends FlxSprite
 {
-	public static var KEYS:Array<Array<FlxKey>> = [
-		[UP, W], [UP, W], [DOWN, S], [DOWN, S], [LEFT, A], [RIGHT, D], [LEFT, A], [RIGHT, D], [K, X], [J, Z]];
+	public static var KEYS:Array<Action> = [UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT, B, A];
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
@@ -53,7 +54,7 @@ class Konami extends FlxSprite
 	{
 		if (step < 10)
 		{
-			return FlxG.keys.anyJustPressed(KEYS[step]);
+			return Controls.justPressed.check(KEYS[step]);
 		}
 		else
 			return false;

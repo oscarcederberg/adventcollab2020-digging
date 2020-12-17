@@ -131,7 +131,7 @@ class PlayState extends FlxState
 			endGame(null);
 		#end
 		#if ADVENT
-		if (FlxG.keys.anyJustPressed([ESCAPE]))
+		if (Controls.justPressed.EXIT)
 			data.Game.exitArcade();
 		#end
 

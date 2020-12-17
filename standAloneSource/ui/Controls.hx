@@ -86,6 +86,12 @@ class ControlsList
         return Controls.useKeys ? checkKeys(action) : checkButtons(action);
     }
     
+    function checkAny()
+    {
+        @:privateAccess
+        return FlxG.keys.checkStatus(FlxKey.ANY, state) || FlxG.gamepads.anyHasState(FlxGamepadInputID.ANY, state);
+    }
+    
     function checkKeys(action:Action)
     {
         @:privateAccess
@@ -112,9 +118,10 @@ class ControlsList
     public var PAUSE   (get, never):Bool; inline function get_PAUSE   () return check(Action.PAUSE   );
     public var ZOOM_IN (get, never):Bool; inline function get_ZOOM_IN () return check(Action.ZOOM_IN );
     public var ZOOM_OUT(get, never):Bool; inline function get_ZOOM_OUT() return check(Action.ZOOM_OUT);
+    public var ANY     (get, never):Bool; inline function get_ANY     () return checkAny();
 }
 
-private enum Action
+enum Action
 {
     UP;
     DOWN;

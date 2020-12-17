@@ -1,5 +1,6 @@
 package digging;
 
+import ui.Controls;
 import blocks.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -129,7 +130,7 @@ class EndState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.keys.anyJustPressed([J, Z]) && rollupComplete)
+		if (Controls.justPressed.A && rollupComplete)
 		{
 			clickRestart();
 		}

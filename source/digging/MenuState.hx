@@ -1,5 +1,6 @@
 package digging;
 
+import ui.Controls;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -10,7 +11,7 @@ import digging.tiles.Bedrock;
 class MenuState extends FlxState
 {
 	var playButton:FlxButton;
-	var keys:Array<Array<FlxKey>>;
+	var keys:Array<Action>;
 	var step:Int;
 
 	override public function create()
@@ -35,7 +36,7 @@ class MenuState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.keys.anyJustPressed([ANY]))
+		if (Controls.justPressed.ANY)
 		{
 			if (Konami.handleKeys(step))
 			{
@@ -48,7 +49,7 @@ class MenuState extends FlxState
 			else
 			{
 				step = 0;
-				if (FlxG.keys.anyJustPressed([J, Z]))
+				if (Controls.justPressed.A)
 				{
 					clickPlay();
 				}
