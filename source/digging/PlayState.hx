@@ -18,6 +18,8 @@ import flixel.util.FlxTimer;
 import digging.tiles.*;
 import digging.tiles.BrickGift.GiftColors;
 
+import ui.Controls;
+
 class PlayState extends FlxState
 {
 	inline public static var WINDOW_WIDTH = 480;
