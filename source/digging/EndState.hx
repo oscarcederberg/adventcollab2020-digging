@@ -1,6 +1,5 @@
 package digging;
 
-import ui.Controls;
 import blocks.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -13,6 +12,13 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+
+import ui.Controls;
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class EndState extends FlxState
 {
@@ -140,6 +146,6 @@ class EndState extends FlxState
 
 	function clickRestart()
 	{
-		FlxG.switchState(new PlayState());
+		Global.switchState(new PlayState());
 	}
 }

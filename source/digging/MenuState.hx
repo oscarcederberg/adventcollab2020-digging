@@ -1,12 +1,18 @@
 package digging;
 
-import ui.Controls;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.input.keyboard.FlxKey;
 import flixel.ui.FlxButton;
 import digging.tiles.Bedrock;
+
+import ui.Controls;
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class MenuState extends FlxState
 {
@@ -61,6 +67,6 @@ class MenuState extends FlxState
 
 	function clickPlay()
 	{
-		FlxG.switchState(new PlayState());
+		Global.switchState(new PlayState());
 	}
 }

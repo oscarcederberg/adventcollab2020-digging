@@ -8,6 +8,12 @@ import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 using flixel.util.FlxSpriteUtil;
 
 class Enemy extends FlxSprite
@@ -28,7 +34,7 @@ class Enemy extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		this.parent = cast(FlxG.state);
+		this.parent = cast(Global.state);
 		this.facing = FlxObject.RIGHT;
 
 		this.totalHits = 3;

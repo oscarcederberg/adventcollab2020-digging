@@ -19,6 +19,11 @@ import digging.tiles.*;
 import digging.tiles.BrickGift.GiftColors;
 
 import ui.Controls;
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class PlayState extends FlxState
 {
@@ -50,7 +55,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		this.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
+		camera.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
 
 		var background:FlxSprite = new FlxSprite(0, 0);
 		background.loadGraphic("assets/images/spr_background.png", true, 320, 512);
@@ -74,11 +79,11 @@ class PlayState extends FlxState
 
 		FlxG.camera.follow(player, TOPDOWN, 1);
 		FlxG.camera.deadzone.x = 0;
-		FlxG.camera.deadzone.y -= FlxG.height / 4; // show the player near the top
+		FlxG.camera.deadzone.y -= Global.height / 4; // show the player near the top
 		FlxG.camera.deadzone.height = 100; // approx the jump height
-		FlxG.camera.deadzone.width = FlxG.width;
+		FlxG.camera.deadzone.width = Global.width;
 		FlxG.camera.minScrollX = -WING_WIDTH;
-		FlxG.camera.maxScrollX = FlxG.width - WING_WIDTH;
+		FlxG.camera.maxScrollX = Global.width - WING_WIDTH;
 		FlxG.camera.minScrollY = null;
 		FlxG.camera.maxScrollY = null;
 
@@ -127,14 +132,14 @@ class PlayState extends FlxState
 		HUD.updateHUD(score, Std.int(time.timeLeft));
 
 		#if (debug || ADVENT)
-		if (FlxG.keys.anyPressed([R]))
-			FlxG.switchState(new PlayState());
+		if (FlxG.keys.anyJustPressed([R]))
+			Global.switchState(new PlayState());
 		if (FlxG.keys.anyJustPressed([Q]))
 			endGame(null);
 		#end
 		#if ADVENT
-		if (Controls.justPressed.EXIT)
-			data.Game.exitArcade();
+		// if (Controls.justPressed.EXIT)
+		// 	data.Game.exitArcade();
 		#end
 
 		super.update(elapsed);
@@ -231,7 +236,7 @@ class PlayState extends FlxState
 		#end
 
 		FlxG.sound.music.stop();
-		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+		Global.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
 	}
 }
 

@@ -11,6 +11,12 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import digging.tiles.*;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 using flixel.util.FlxSpriteUtil;
 
 class Player extends FlxSprite
@@ -34,7 +40,7 @@ class Player extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		this.parent = cast(FlxG.state);
+		this.parent = cast(Global.state);
 		this.pickaxe = new Pickaxe(x, y, this, 3, 1);
 		parent.add(pickaxe);
 

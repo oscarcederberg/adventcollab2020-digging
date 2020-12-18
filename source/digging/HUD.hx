@@ -6,6 +6,12 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxBitmapText;
 import flixel.util.FlxColor;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 using flixel.util.FlxSpriteUtil;
 
 class HUD extends FlxTypedGroup<FlxSprite>
@@ -35,10 +41,10 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		scoreCounter.y = 8;
 		scoreCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		scoreCounter.scrollFactor.set(0, 0);
-		// timeCounter = new FlxText(FlxG.width - 40, 8, 0, "300", 16);
+		// timeCounter = new FlxText(Global.width - 40, 8, 0, "300", 16);
 		timeCounter = new FlxBitmapText(font);
 		timeCounter.text = "300";
-		timeCounter.x = FlxG.width - WING_WIDTH - timeCounter.width - 8;
+		timeCounter.x = Global.width - WING_WIDTH - timeCounter.width - 8;
 		timeCounter.y = 8;
 		timeCounter.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		timeCounter.scrollFactor.set(0, 0);
