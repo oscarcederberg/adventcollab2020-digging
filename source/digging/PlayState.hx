@@ -227,7 +227,7 @@ class PlayState extends FlxState
 		#if ADVENT
 		data.NGio.postPlayerHiscore("digging", score);
 		if (score > 20000)
-			data.NGio.unlockMedal(61364);// hard coded for now, meh
+			data.NGio.unlockMedalByName("digging");// hard coded for now, meh
 		#end
 
 		FlxG.sound.music.stop();
