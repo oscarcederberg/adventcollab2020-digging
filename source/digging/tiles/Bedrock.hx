@@ -47,7 +47,7 @@ class Konami extends FlxSprite
 		animation.add("konami", [0, 1, 2, 3], 10, true);
 		animation.play("konami");
 
-		FlxG.sound.play("assets/sounds/sfx_konami.wav");
+		FlxG.sound.play("assets/sounds/sfx_konami.mp3");
 	}
 
 	static public function handleKeys(step:Int):Bool

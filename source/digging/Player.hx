@@ -69,9 +69,9 @@ class Player extends FlxSprite
 		animation.add("dig_up", [10, 11, 12], 8, true);
 		animation.play("idle");
 
-		sfx_step = FlxG.sound.load("assets/sounds/sfx_step.wav");
-		sfx_hit_1 = FlxG.sound.load("assets/sounds/sfx_hit_1.wav");
-		sfx_damage = FlxG.sound.load("assets/sounds/sfx_damage.wav");
+		sfx_step = FlxG.sound.load("assets/sounds/sfx_step.mp3");
+		sfx_hit_1 = FlxG.sound.load("assets/sounds/sfx_hit_1.mp3");
+		sfx_damage = FlxG.sound.load("assets/sounds/sfx_damage.mp3");
 	}
 
 	override public function update(elapsed:Float):Void

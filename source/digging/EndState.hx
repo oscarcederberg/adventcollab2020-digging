@@ -95,7 +95,7 @@ class EndState extends FlxState
 
 	override public function create()
 	{
-		FlxG.sound.play("assets/sounds/sfx_times_up.wav");
+		FlxG.sound.play("assets/sounds/sfx_times_up.mp3");
 		var timer = new FlxTimer();
 		timer.start(4, (_) ->
 		{

@@ -114,7 +114,7 @@ class PlayState extends FlxState
 				fastMode = true;
 				HUD.updateFlicker();
 				FlxG.sound.music.fadeOut(0.2, 0);
-				FlxG.sound.play("assets/sounds/sfx_hurry_up.wav");
+				FlxG.sound.play("assets/sounds/sfx_hurry_up.mp3");
 				new FlxTimer().start(3.33, switchTrack, 1);
 			}
 		}

@@ -54,7 +54,7 @@ class Enemy extends FlxSprite
 		animation.add("walk", [1, 0], 4, true);
 		animation.play("walk");
 
-		sfx_hit_2 = FlxG.sound.load("assets/sounds/sfx_hit_2.wav");
+		sfx_hit_2 = FlxG.sound.load("assets/sounds/sfx_hit_2.mp3");
 	}
 
 	override public function update(elapsed:Float):Void

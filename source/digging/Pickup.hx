@@ -19,7 +19,7 @@ class Pickup extends FlxSprite
 		this.score = 0;
 		this.acceleration.y = GRAVITY;
 
-		this.sfx_pickup = FlxG.sound.load("assets/sounds/sfx_pickup.wav");
+		this.sfx_pickup = FlxG.sound.load("assets/sounds/sfx_pickup.mp3");
 	}
 
 	override public function update(elapsed:Float):Void
