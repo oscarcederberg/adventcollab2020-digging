@@ -3,6 +3,12 @@ package digging.tiles;
 import flixel.math.FlxRandom;
 import haxe.macro.Expr.Case;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 enum GiftColors
 {
 	Green;
@@ -34,7 +40,7 @@ class BrickGift extends Tile
 
 		var offset = giftColor.getIndex();
 
-		loadGraphic("assets/images/spr_brick_gift.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_brick_gift.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 
 		animation.add("hit_0", [offset * 3 + 0]);
 		animation.add("hit_1", [offset * 3 + 1]);

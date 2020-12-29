@@ -45,7 +45,7 @@ class Enemy extends FlxSprite
 		maxVelocity.x = MOVE_SPEED;
 		maxVelocity.y = JUMP_SPEED;
 
-		loadGraphic("assets/images/spr_enemy_gov.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_enemy_gov.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		setSize(28, 32);
 		centerOffsets();
 		setFacingFlip(FlxObject.LEFT, true, false);
@@ -54,7 +54,7 @@ class Enemy extends FlxSprite
 		animation.add("walk", [1, 0], 4, true);
 		animation.play("walk");
 
-		sfx_hit_2 = FlxG.sound.load("assets/sounds/sfx_hit_2.mp3");
+		sfx_hit_2 = FlxG.sound.load(Global.asset("assets/sounds/sfx_hit_2.mp3"));
 	}
 
 	override public function update(elapsed:Float):Void

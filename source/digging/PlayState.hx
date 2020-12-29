@@ -58,13 +58,13 @@ class PlayState extends FlxState
 		camera.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
 
 		var background:FlxSprite = new FlxSprite(0, 0);
-		background.loadGraphic("assets/images/spr_background.png", true, 320, 512);
+		background.loadGraphic(Global.asset("assets/images/spr_background.png"), true, 320, 512);
 		add(background);
 
 		this.tiles = new FlxTypedGroup<Tile>();
-		this.map = new FlxOgmo3Loader("assets/data/advent2020.ogmo", "assets/data/level_1.json");
+		this.map = new FlxOgmo3Loader(Global.asset("assets/data/advent2020.ogmo"), Global.asset("assets/data/level_1.json"));
 		this.bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
-		this.tilemap = map.loadTilemap("assets/images/OGMO/tiles.png", "tiles");
+		this.tilemap = map.loadTilemap(Global.asset("assets/images/OGMO/tiles.png"), "tiles");
 		placeTiles();
 		add(this.tiles);
 
@@ -99,7 +99,7 @@ class PlayState extends FlxState
 		add(HUD);
 
 		this.fastMode = false;
-		FlxG.sound.playMusic("assets/music/mus_music_normal.mp3", 0.5, true);
+		FlxG.sound.playMusic(Global.asset("assets/music/mus_music_normal.mp3"), 0.5, true);
 		FlxG.sound.music.loopTime = 22160;
 
 		super.create();
@@ -114,7 +114,7 @@ class PlayState extends FlxState
 				fastMode = true;
 				HUD.updateFlicker();
 				FlxG.sound.music.fadeOut(0.2, 0);
-				FlxG.sound.play("assets/sounds/sfx_hurry_up.mp3");
+				FlxG.sound.play(Global.asset("assets/sounds/sfx_hurry_up.mp3"));
 				new FlxTimer().start(3.33, switchTrack, 1);
 			}
 		}
@@ -218,7 +218,7 @@ class PlayState extends FlxState
 
 	public function switchTrack(timer:FlxTimer)
 	{
-		FlxG.sound.playMusic("assets/music/mus_music_fast.mp3", 0.5, true);
+		FlxG.sound.playMusic(Global.asset("assets/music/mus_music_fast.mp3"), 0.5, true);
 		FlxG.sound.music.loopTime = 18005;
 	}
 

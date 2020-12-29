@@ -4,6 +4,12 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.util.FlxCollision;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 class BlockEnemy extends Tile
 {
 	public function new(x:Float = 0, y:Float = 0)
@@ -13,7 +19,7 @@ class BlockEnemy extends Tile
 		this.totalHits = 4;
 		this.currentHits = this.totalHits;
 
-		loadGraphic("assets/images/spr_block_enemy.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_block_enemy.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		animation.add("hit_0", [0]);
 		animation.add("hit_1", [1]);
 		animation.add("hit_2", [2]);

@@ -7,6 +7,11 @@ import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxCollision;
 
 import ui.Controls;
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class Bedrock extends Tile
 {
@@ -17,7 +22,7 @@ class Bedrock extends Tile
 		this.totalHits = 999;
 		this.currentHits = this.totalHits;
 
-		loadGraphic("assets/images/spr_bedrock.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_bedrock.png"), false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 
 	override public function hit(amount:Int):Void
@@ -37,17 +42,17 @@ class Konami extends FlxSprite
 		var today = Date.now();
 		if (today.getMonth() == 11 && today.getDate() == 8)
 		{
-			loadGraphic("assets/images/spr_konami_bd.png", true, 96, 128);
+			loadGraphic(Global.asset("assets/images/spr_konami_bd.png"), true, 96, 128);
 		}
 		else
 		{
-			loadGraphic("assets/images/spr_konami.png", true, 96, 128);
+			loadGraphic(Global.asset("assets/images/spr_konami.png"), true, 96, 128);
 		}
 
 		animation.add("konami", [0, 1, 2, 3], 10, true);
 		animation.play("konami");
 
-		FlxG.sound.play("assets/sounds/sfx_konami.mp3");
+		FlxG.sound.play(Global.asset("assets/sounds/sfx_konami.mp3"));
 	}
 
 	static public function handleKeys(step:Int):Bool

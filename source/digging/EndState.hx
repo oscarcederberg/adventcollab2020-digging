@@ -31,7 +31,7 @@ class EndState extends FlxState
 		this.score = score;
 		super();
 
-		var background:FlxBackdrop = new FlxBackdrop("assets/images/spr_end.png", 2, 1);
+		var background:FlxBackdrop = new FlxBackdrop(Global.asset("assets/images/spr_end.png"), 2, 1);
 		background.velocity.set(16, 8);
 
 		var font = new ui.Font.NokiaFont16();
@@ -95,11 +95,11 @@ class EndState extends FlxState
 
 	override public function create()
 	{
-		FlxG.sound.play("assets/sounds/sfx_times_up.mp3");
+		FlxG.sound.play(Global.asset("assets/sounds/sfx_times_up.mp3"));
 		var timer = new FlxTimer();
 		timer.start(4, (_) ->
 		{
-			FlxG.sound.playMusic("assets/music/mus_jingle.mp3", 0.5, true);
+			FlxG.sound.playMusic(Global.asset("assets/music/mus_jingle.mp3"), 0.5, true);
 			FlxG.sound.music.loopTime = 3692;
 		}, 1);
 
@@ -117,14 +117,14 @@ class EndState extends FlxState
 		rollupComplete = true;
 
 		var playButton = new FlxButton(0, 13 * 540 / 32, null, clickRestart);
-		playButton.loadGraphic("assets/images/spr_button_restart.png", true, 80, 26);
+		playButton.loadGraphic(Global.asset("assets/images/spr_button_restart.png"), true, 80, 26);
 		playButton.screenCenter(X);
 		playButton.scrollFactor.set(0, 0);
 		
 		#if ADVENT
 		playButton.x += playButton.width;
 		var exitButton = new FlxButton(0, 13 * 540 / 32, null, data.Game.exitArcade);
-		exitButton.loadGraphic("assets/images/spr_button_exit.png", true, 80, 26);
+		exitButton.loadGraphic(Global.asset("assets/images/spr_button_exit.png"), true, 80, 26);
 		exitButton.screenCenter(X);
 		exitButton.scrollFactor.set(0, 0);
 		exitButton.x -= exitButton.width;
