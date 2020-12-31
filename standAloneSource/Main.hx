@@ -1,13 +1,18 @@
 package;
 
+import digging.MenuState;
+
+import ui.Controls;
+
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
-class DiggingMain extends Sprite
+class Main extends Sprite
 {
 	public function new()
 	{
 		super();
 		addChild(new FlxGame(480, 270, MenuState));
+		Controls.init();
 	}
 }

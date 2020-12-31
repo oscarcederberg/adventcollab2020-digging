@@ -1,17 +1,29 @@
-package;
+package digging;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup;
+import flixel.text.FlxBitmapText;
 import flixel.tile.FlxTilemap;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import tiles.*;
-import tiles.BrickGift.GiftColors;
+
+import digging.tiles.*;
+import digging.tiles.BrickGift.GiftColors;
+
+import ui.Controls;
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class PlayState extends FlxState
 {
@@ -39,21 +51,25 @@ class PlayState extends FlxState
 	public var enemies:FlxTypedGroup<Enemy>;
 	public var pickups:FlxTypedGroup<Pickup>;
 	public var bounds:FlxGroup;
+	public var infoTexts:FlxTypedGroup<InfoText>;
 
 	override public function create()
 	{
-		this.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
+		camera.bgColor = FlxColor.fromRGB(155, 173, 183, 255);
 
 		var background:FlxSprite = new FlxSprite(0, 0);
-		background.loadGraphic("assets/images/spr_background.png", true, 320, 512);
+		background.loadGraphic(Global.asset("assets/images/spr_background.png"), true, 320, 512);
 		add(background);
 
 		this.tiles = new FlxTypedGroup<Tile>();
-		this.map = new FlxOgmo3Loader("assets/data/advent2020.ogmo", "assets/data/level_1.json");
+		this.map = new FlxOgmo3Loader(Global.asset("assets/data/advent2020.ogmo"), Global.asset("assets/data/level_1.json"));
 		this.bounds = FlxCollision.createCameraWall(new FlxCamera(0, 0, 320, 51200, 1), true, 1, true);
-		this.tilemap = map.loadTilemap("assets/images/OGMO/tiles.png", "tiles");
+		this.tilemap = map.loadTilemap(Global.asset("assets/images/OGMO/tiles.png"), "tiles");
 		placeTiles();
 		add(this.tiles);
+
+		add(infoTexts = new FlxTypedGroup());
+		InfoText.pool = infoTexts;
 
 		this.enemies = new FlxTypedGroup<Enemy>();
 		this.pickups = new FlxTypedGroup<Pickup>();
@@ -63,11 +79,11 @@ class PlayState extends FlxState
 
 		FlxG.camera.follow(player, TOPDOWN, 1);
 		FlxG.camera.deadzone.x = 0;
-		FlxG.camera.deadzone.y -= FlxG.height / 4; // show the player near the top
+		FlxG.camera.deadzone.y -= Global.height / 4; // show the player near the top
 		FlxG.camera.deadzone.height = 100; // approx the jump height
-		FlxG.camera.deadzone.width = FlxG.width;
+		FlxG.camera.deadzone.width = Global.width;
 		FlxG.camera.minScrollX = -WING_WIDTH;
-		FlxG.camera.maxScrollX = FlxG.width - WING_WIDTH;
+		FlxG.camera.maxScrollX = Global.width - WING_WIDTH;
 		FlxG.camera.minScrollY = null;
 		FlxG.camera.maxScrollY = null;
 
@@ -83,7 +99,7 @@ class PlayState extends FlxState
 		add(HUD);
 
 		this.fastMode = false;
-		FlxG.sound.playMusic("assets/music/mus_music_normal.mp3", 0.5, true);
+		FlxG.sound.playMusic(Global.asset("assets/music/mus_music_normal.mp3"), 0.5, true);
 		FlxG.sound.music.loopTime = 22160;
 
 		super.create();
@@ -98,7 +114,7 @@ class PlayState extends FlxState
 				fastMode = true;
 				HUD.updateFlicker();
 				FlxG.sound.music.fadeOut(0.2, 0);
-				FlxG.sound.play("assets/sounds/sfx_hurry_up.wav");
+				FlxG.sound.play(Global.asset("assets/sounds/sfx_hurry_up.mp3"));
 				new FlxTimer().start(3.33, switchTrack, 1);
 			}
 		}
@@ -108,7 +124,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(enemies, tiles);
 		FlxG.collide(enemies, bounds);
-		FlxG.overlap(player, pickups, (_, pickup:Pickup) -> pickup.pickup());
+		FlxG.overlap(player, pickups, (_, pickup:Pickup) -> pickupItem(pickup));
 		FlxG.collide(pickups, tiles);
 
 		var currentDepth = Std.int((player.y - 6 * CELL_SIZE) / 32);
@@ -116,15 +132,31 @@ class PlayState extends FlxState
 		HUD.updateHUD(score, Std.int(time.timeLeft));
 
 		#if (debug || ADVENT)
-		if (FlxG.keys.anyPressed([R]))
-			FlxG.switchState(new PlayState());
+		if (FlxG.keys.anyJustPressed([R]))
+			Global.switchState(new PlayState());
 		if (FlxG.keys.anyJustPressed([Q]))
 			endGame(null);
-		if (FlxG.keys.anyJustPressed([ESCAPE]))
-			data.Game.exitArcade();
+		#end
+		#if ADVENT
+		// if (Controls.justPressed.EXIT)
+		// 	data.Game.exitArcade();
 		#end
 
 		super.update(elapsed);
+	}
+
+	function pickupItem(pickup:Pickup)
+	{
+		if (FlxG.pixelPerfectOverlap(pickup, player))
+		{
+			giftsCollected++;
+			if (pickup.score > 0)
+			{
+				updateScore(pickup.score);
+				new ScoreText(pickup, pickup.score);
+			}
+			pickup.pickup();
+		}
 	}
 
 	// we want to tiles from the transform layer to actual tile entities instead of unbreakable tiles, this seems to be the only way?
@@ -186,7 +218,7 @@ class PlayState extends FlxState
 
 	public function switchTrack(timer:FlxTimer)
 	{
-		FlxG.sound.playMusic("assets/music/mus_music_fast.mp3", 0.5, true);
+		FlxG.sound.playMusic(Global.asset("assets/music/mus_music_fast.mp3"), 0.5, true);
 		FlxG.sound.music.loopTime = 18005;
 	}
 
@@ -200,10 +232,44 @@ class PlayState extends FlxState
 		#if ADVENT
 		data.NGio.postPlayerHiscore("digging", score);
 		if (score > 20000)
-			data.NGio.unlockMedal(61364);// hard coded for now, meh
+			data.NGio.unlockMedalByName("digging");// hard coded for now, meh
 		#end
 
 		FlxG.sound.music.stop();
-		FlxG.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+		Global.switchState(new EndState(score, giftsCollected, blocksDestroyed, enemiesKilled, maxDepth));
+	}
+}
+
+abstract HitText(InfoText) to InfoText
+{
+	inline public function new (source:FlxObject, seconds:Int)
+	{
+		this = new InfoText(source, '-${seconds}s', 0xFFff0000);
+	}
+}
+
+abstract ScoreText(InfoText) to InfoText
+{
+	inline public function new (source:FlxObject, score:Int)
+	{
+		this = new InfoText(source, score+"pts", 0xFFffffff, 0xFF486cb7);
+	}
+}
+
+abstract InfoText(FlxBitmapText) to FlxBitmapText
+{
+	static public var pool:FlxTypedGroup<FlxBitmapText>;
+	
+	public function new (source:FlxObject, text:String, color:FlxColor, border:FlxColor = 0xFF000000)
+	{
+		this = cast pool.recycle(FlxBitmapText, ()->new FlxBitmapText());
+		this.text = text;
+		this.x = source.x + (source.width - this.width) / 2;
+		this.y = source.y;
+		this.setBorderStyle(OUTLINE, border, 1);
+		this.color = color;
+
+		FlxTween.tween(this, { y:this.y - PlayState.CELL_SIZE }, 1,
+			{ ease:(t)->FlxEase.quadOut(Math.min(1, t * 1.5)), onComplete:(_)->this.kill() });
 	}
 }

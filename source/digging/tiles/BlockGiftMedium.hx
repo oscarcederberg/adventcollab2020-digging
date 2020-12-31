@@ -1,6 +1,12 @@
-package tiles;
+package digging.tiles;
 
 import flixel.math.FlxRandom;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class BlockGiftMedium extends Tile
 {
@@ -11,7 +17,7 @@ class BlockGiftMedium extends Tile
 		this.totalHits = 5;
 		this.currentHits = this.totalHits;
 
-		loadGraphic("assets/images/spr_block_gift_medium.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_block_gift_medium.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 
 		animation.add("hit_0", [0]);
 		animation.add("hit_1", [1]);

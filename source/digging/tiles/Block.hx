@@ -1,8 +1,14 @@
-package tiles;
+package digging.tiles;
 
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.util.FlxCollision;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class Block extends Tile
 {
@@ -13,7 +19,7 @@ class Block extends Tile
 		this.totalHits = 3;
 		this.currentHits = this.totalHits;
 
-		loadGraphic("assets/images/spr_block.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_block.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		animation.add("hit_0", [0]);
 		animation.add("hit_1", [1]);
 		animation.add("hit_2", [2]);

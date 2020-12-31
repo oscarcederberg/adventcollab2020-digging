@@ -1,4 +1,7 @@
-package;
+package digging;
+
+import digging.PlayState;
+import ui.Controls;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -6,7 +9,13 @@ import flixel.FlxSprite;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import tiles.*;
+import digging.tiles.*;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 using flixel.util.FlxSpriteUtil;
 
@@ -31,7 +40,7 @@ class Player extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		this.parent = cast(FlxG.state);
+		this.parent = cast(Global.state);
 		this.pickaxe = new Pickaxe(x, y, this, 3, 1);
 		parent.add(pickaxe);
 
@@ -44,7 +53,7 @@ class Player extends FlxSprite
 		maxVelocity.x = MOVE_SPEED;
 		maxVelocity.y = JUMP_SPEED;
 
-		loadGraphic("assets/images/spr_player.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_player.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		setSize(WIDTH, HEIGHT);
 		centerOffsets();
 		offset.set(offset.x, 6);
@@ -60,9 +69,9 @@ class Player extends FlxSprite
 		animation.add("dig_up", [10, 11, 12], 8, true);
 		animation.play("idle");
 
-		sfx_step = FlxG.sound.load("assets/sounds/sfx_step.wav");
-		sfx_hit_1 = FlxG.sound.load("assets/sounds/sfx_hit_1.wav");
-		sfx_damage = FlxG.sound.load("assets/sounds/sfx_damage.wav");
+		sfx_step = FlxG.sound.load(Global.asset("assets/sounds/sfx_step.mp3"));
+		sfx_hit_1 = FlxG.sound.load(Global.asset("assets/sounds/sfx_hit_1.mp3"));
+		sfx_damage = FlxG.sound.load(Global.asset("assets/sounds/sfx_damage.mp3"));
 	}
 
 	override public function update(elapsed:Float):Void
@@ -88,6 +97,7 @@ class Player extends FlxSprite
 		if (FlxG.overlap(this, parent.enemies) && !this.isFlickering())
 		{
 			parent.time.time -= 15;
+			new HitText(this, 15);
 			this.flicker(2);
 			sfx_damage.play();
 		}
@@ -102,13 +112,13 @@ class Player extends FlxSprite
 
 	function movement():Void
 	{
-		var _up:Bool = FlxG.keys.anyPressed([UP, W,]);
-		var _down:Bool = FlxG.keys.anyPressed([DOWN, S]);
-		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
-		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
+		var _up:Bool = Controls.pressed.UP;
+		var _down:Bool = Controls.pressed.DOWN;
+		var _left:Bool = Controls.pressed.LEFT;
+		var _right:Bool = Controls.pressed.RIGHT;
 
-		var _action:Bool = FlxG.keys.anyPressed([Z, J]);
-		var _jump:Bool = FlxG.keys.anyJustPressed([X, K, SPACE]);
+		var _action:Bool = Controls.pressed.A;
+		var _jump:Bool = Controls.justPressed.B;
 
 		velocity.x = 0;
 		if (!digging)
@@ -178,10 +188,10 @@ class Player extends FlxSprite
 	// animate.... and play some sound hehe
 	function animate()
 	{
-		var _up:Bool = FlxG.keys.anyPressed([UP, W,]);
-		var _down:Bool = FlxG.keys.anyPressed([DOWN, S]);
-		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
-		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
+		var _up:Bool = Controls.pressed.UP;
+		var _down:Bool = Controls.pressed.DOWN;
+		var _left:Bool = Controls.pressed.LEFT;
+		var _right:Bool = Controls.pressed.RIGHT;
 
 		if (_up && _down)
 			_up = _down = false;

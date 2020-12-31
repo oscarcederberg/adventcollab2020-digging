@@ -1,11 +1,18 @@
-package;
+package digging;
 
+import digging.PlayState;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 using flixel.util.FlxSpriteUtil;
 
@@ -27,7 +34,7 @@ class Enemy extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		this.parent = cast(FlxG.state);
+		this.parent = cast(Global.state);
 		this.facing = FlxObject.RIGHT;
 
 		this.totalHits = 3;
@@ -38,7 +45,7 @@ class Enemy extends FlxSprite
 		maxVelocity.x = MOVE_SPEED;
 		maxVelocity.y = JUMP_SPEED;
 
-		loadGraphic("assets/images/spr_enemy_gov.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_enemy_gov.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		setSize(28, 32);
 		centerOffsets();
 		setFacingFlip(FlxObject.LEFT, true, false);
@@ -47,7 +54,7 @@ class Enemy extends FlxSprite
 		animation.add("walk", [1, 0], 4, true);
 		animation.play("walk");
 
-		sfx_hit_2 = FlxG.sound.load("assets/sounds/sfx_hit_2.wav");
+		sfx_hit_2 = FlxG.sound.load(Global.asset("assets/sounds/sfx_hit_2.mp3"));
 	}
 
 	override public function update(elapsed:Float):Void
@@ -88,6 +95,7 @@ class Enemy extends FlxSprite
 			{
 				parent.updateScore(SCORE);
 				parent.enemiesKilled++;
+				new ScoreText(this, SCORE);
 				kill();
 			}
 			else

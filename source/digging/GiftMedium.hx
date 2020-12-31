@@ -1,10 +1,16 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
-import tiles.BrickGift.GiftColors;
+import digging.tiles.BrickGift.GiftColors;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class GiftMedium extends Pickup
 {
@@ -15,6 +21,6 @@ class GiftMedium extends Pickup
 		super(x, y);
 		this.score = 300;
 
-		loadGraphic("assets/images/spr_gift_medium.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_gift_medium.png"), false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 }

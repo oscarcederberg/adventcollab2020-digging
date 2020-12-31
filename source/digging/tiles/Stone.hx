@@ -1,19 +1,25 @@
-package tiles;
+package digging.tiles;
 
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.util.FlxCollision;
 
-class BlockEnemy extends Tile
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
+class Stone extends Tile
 {
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		this.score = 20;
-		this.totalHits = 4;
+		this.score = 30;
+		this.totalHits = 5;
 		this.currentHits = this.totalHits;
 
-		loadGraphic("assets/images/spr_block_enemy.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_stone.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		animation.add("hit_0", [0]);
 		animation.add("hit_1", [1]);
 		animation.add("hit_2", [2]);
@@ -30,11 +36,5 @@ class BlockEnemy extends Tile
 		{
 			animation.play("hit_2");
 		}
-	}
-
-	override public function breakblock():Void
-	{
-		parent.enemies.add(new Enemy(x, y));
-		destroy();
 	}
 }

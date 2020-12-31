@@ -1,10 +1,16 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
-import tiles.BrickGift.GiftColors;
+import digging.tiles.BrickGift.GiftColors;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class Gift extends Pickup
 {
@@ -30,9 +36,9 @@ class Gift extends Pickup
 			this.giftColor = giftColor;
 		}
 
-		var offset = giftColor.getIndex();
+		var offset = this.giftColor.getIndex();
 
-		loadGraphic("assets/images/spr_gift.png", true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_gift.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		animation.add("idle", [offset]);
 		animation.play("idle");
 	}

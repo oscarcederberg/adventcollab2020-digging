@@ -1,8 +1,14 @@
-package tiles;
+package digging.tiles;
 
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.util.FlxCollision;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class Snow extends Tile
 {
@@ -13,6 +19,6 @@ class Snow extends Tile
 		this.totalHits = 1;
 		this.currentHits = this.totalHits;
 
-		loadGraphic("assets/images/spr_snow.png", false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
+		loadGraphic(Global.asset("assets/images/spr_snow.png"), false, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 	}
 }

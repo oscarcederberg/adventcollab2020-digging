@@ -1,7 +1,13 @@
-package tiles;
+package digging.tiles;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class Tile extends FlxSprite
 {
@@ -15,7 +21,7 @@ class Tile extends FlxSprite
 	{
 		super(x, y);
 		this.score = 0;
-		this.parent = cast(FlxG.state);
+		this.parent = cast(Global.state);
 		immovable = true;
 	}
 

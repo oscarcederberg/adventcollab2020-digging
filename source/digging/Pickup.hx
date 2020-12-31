@@ -1,26 +1,31 @@
-package;
+package digging;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 class Pickup extends FlxSprite
 {
 	static final GRAVITY:Float = PlayState.CELL_SIZE * 30;
-
-	var score:Int;
-	var parent:PlayState;
+	
+	public var score(default, null):Int;
+	
 	var sfx_pickup:FlxSound;
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
 		this.score = 0;
-		this.parent = cast(FlxG.state);
 		this.acceleration.y = GRAVITY;
 
-		this.sfx_pickup = FlxG.sound.load("assets/sounds/sfx_pickup.wav");
+		this.sfx_pickup = FlxG.sound.load(Global.asset("assets/sounds/sfx_pickup.mp3"));
 	}
 
 	override public function update(elapsed:Float):Void
@@ -30,12 +35,7 @@ class Pickup extends FlxSprite
 
 	public function pickup()
 	{
-		if (FlxG.pixelPerfectOverlap(this, parent.player))
-		{
-			sfx_pickup.play();
-			parent.updateScore(score);
-			parent.giftsCollected++;
-			kill();
-		}
+		sfx_pickup.play();
+		kill();
 	}
 }
