@@ -8,6 +8,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
+import flixel.util.FlxDirectionFlags;
 import flixel.util.FlxTimer;
 import digging.tiles.*;
 
@@ -27,7 +28,7 @@ class Player extends FlxSprite
 	static final JUMP_SPEED:Float = PlayState.CELL_SIZE * 10;
 	static final GRAVITY:Float = PlayState.CELL_SIZE * 30;
 
-	var looking_at:Int;
+	var looking_at:FlxDirectionFlags;
 	var jumping:Bool;
 	var digging:Bool;
 	var pickaxe:Pickaxe;
@@ -44,8 +45,8 @@ class Player extends FlxSprite
 		this.pickaxe = new Pickaxe(x, y, this, 3, 1);
 		parent.add(pickaxe);
 
-		this.facing = FlxObject.RIGHT;
-		this.looking_at = FlxObject.RIGHT;
+		this.facing = RIGHT;
+		this.looking_at = RIGHT;
 		this.jumping = false;
 		this.digging = false;
 		drag.x = MOVE_SPEED * 8;
@@ -57,8 +58,8 @@ class Player extends FlxSprite
 		setSize(WIDTH, HEIGHT);
 		centerOffsets();
 		offset.set(offset.x, 6);
-		setFacingFlip(FlxObject.LEFT, true, false);
-		setFacingFlip(FlxObject.RIGHT, false, false);
+		setFacingFlip(LEFT, true, false);
+		setFacingFlip(RIGHT, false, false);
 		animation.add("idle", [0]);
 		animation.add("jump", [1]);
 		animation.add("walk", [1, 0], 4, true);
@@ -83,14 +84,15 @@ class Player extends FlxSprite
 
 		switch (looking_at)
 		{
-			case FlxObject.UP:
+			case UP:
 				this.pickaxe.setPosition(center_x, center_y - HEIGHT);
-			case FlxObject.LEFT:
+			case LEFT:
 				this.pickaxe.setPosition(center_x - WIDTH, center_y);
-			case FlxObject.DOWN:
+			case DOWN:
 				this.pickaxe.setPosition(center_x, center_y + HEIGHT);
-			case FlxObject.RIGHT:
+			case RIGHT:
 				this.pickaxe.setPosition(center_x + WIDTH, center_y);
+			case _://oops?
 		}
 		this.pickaxe.last.set(pickaxe.x, pickaxe.y);
 
@@ -130,18 +132,18 @@ class Player extends FlxSprite
 
 			if (_left)
 			{
-				facing = FlxObject.LEFT;
-				looking_at = FlxObject.LEFT;
+				facing = LEFT;
+				looking_at = LEFT;
 			}
 			else if (_right)
 			{
-				facing = FlxObject.RIGHT;
-				looking_at = FlxObject.RIGHT;
+				facing = RIGHT;
+				looking_at = RIGHT;
 			}
 			else if (_up)
-				looking_at = FlxObject.UP;
+				looking_at = UP;
 			else if (_down)
-				looking_at = FlxObject.DOWN;
+				looking_at = DOWN;
 			else
 				looking_at = facing;
 
@@ -154,10 +156,10 @@ class Player extends FlxSprite
 				velocity.x = MOVE_SPEED;
 			}
 		}
-		if ((velocity.x > 0 && this.isTouching(FlxObject.RIGHT)) || (velocity.x < 0 && this.isTouching(FlxObject.LEFT)))
+		if ((velocity.x > 0 && this.isTouching(RIGHT)) || (velocity.x < 0 && this.isTouching(LEFT)))
 			velocity.x = 0;
 
-		if (this.isTouching(FlxObject.FLOOR))
+		if (this.isTouching(FLOOR))
 		{
 			if (_jump && !_action && !jumping && !digging)
 			{
@@ -200,7 +202,7 @@ class Player extends FlxSprite
 
 		if (!jumping && !digging)
 		{
-			if (this.isTouching(FlxObject.FLOOR))
+			if (this.isTouching(FLOOR))
 			{
 				if (_left || _right)
 				{
@@ -230,7 +232,7 @@ class Player extends FlxSprite
 		else if (jumping || velocity.y != 0)
 		{
 			sfx_step.stop();
-			if (!this.isTouching(FlxObject.CEILING) && !this.isTouching(FlxObject.FLOOR))
+			if (!this.isTouching(CEILING) && !this.isTouching(FLOOR))
 				animation.play("jump");
 		}
 		else if (digging)
@@ -238,9 +240,9 @@ class Player extends FlxSprite
 			sfx_step.stop();
 			switch (looking_at)
 			{
-				case FlxObject.UP:
+				case UP:
 					animation.play("dig_up");
-				case FlxObject.DOWN:
+				case DOWN:
 					animation.play("dig_down");
 				default:
 					animation.play("dig_side");
