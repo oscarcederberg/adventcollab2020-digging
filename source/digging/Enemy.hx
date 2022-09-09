@@ -35,7 +35,7 @@ class Enemy extends FlxSprite
 	{
 		super(x, y);
 		this.parent = cast(Global.state);
-		this.facing = FlxObject.RIGHT;
+		this.facing = RIGHT;
 
 		this.totalHits = 3;
 		this.currentHits = this.totalHits;
@@ -48,8 +48,8 @@ class Enemy extends FlxSprite
 		loadGraphic(Global.asset("assets/images/spr_enemy_gov.png"), true, PlayState.CELL_SIZE, PlayState.CELL_SIZE);
 		setSize(28, 32);
 		centerOffsets();
-		setFacingFlip(FlxObject.LEFT, true, false);
-		setFacingFlip(FlxObject.RIGHT, false, false);
+		setFacingFlip(LEFT, true, false);
+		setFacingFlip(RIGHT, false, false);
 		animation.add("idle", [0]);
 		animation.add("walk", [1, 0], 4, true);
 		animation.play("walk");
@@ -68,14 +68,14 @@ class Enemy extends FlxSprite
 	{
 		switch (facing)
 		{
-			case FlxObject.LEFT:
-				if (this.isTouching(FlxObject.LEFT))
+			case LEFT:
+				if (this.isTouching(LEFT))
 				{
 					animation.play("idle");
 					new FlxTimer().start(0.4, turn);
 				}
-			case FlxObject.RIGHT:
-				if (this.isTouching(FlxObject.RIGHT))
+			case RIGHT:
+				if (this.isTouching(RIGHT))
 				{
 					animation.play("idle");
 					new FlxTimer().start(0.4, turn);
@@ -104,12 +104,12 @@ class Enemy extends FlxSprite
 				if (parent.player.x < x)
 				{
 					velocity.x = MOVE_SPEED;
-					facing = FlxObject.RIGHT;
+					facing = RIGHT;
 				}
 				else
 				{
 					velocity.x = -MOVE_SPEED;
-					facing = FlxObject.LEFT;
+					facing = LEFT;
 				}
 			}
 		}
@@ -118,15 +118,15 @@ class Enemy extends FlxSprite
 	function turn(flxtimer:FlxTimer)
 	{
 		animation.play("walk");
-		if (facing == FlxObject.RIGHT)
+		if (facing == RIGHT)
 		{
 			velocity.x = -MOVE_SPEED;
-			facing = FlxObject.LEFT;
+			facing = LEFT;
 		}
 		else
 		{
 			velocity.x = MOVE_SPEED;
-			facing = FlxObject.RIGHT;
+			facing = RIGHT;
 		}
 	}
 }
