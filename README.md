@@ -1,4 +1,4 @@
-# adventcollab20-digging
+# adventcollab2020-digging
 Digging Minigame - Submission for the Newgrounds Advent Calendar Collab 2020
 
 Framework: HaxeFlixel\
